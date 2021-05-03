@@ -33,6 +33,9 @@
     font-weight: bold;
     border-radius: 25%;
 }
+.refresh:hover {
+    background:  rgb(118, 181, 205);
+}
 .tablo-rows {
 	width: 100%;
     height: 10px;

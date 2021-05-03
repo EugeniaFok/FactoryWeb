@@ -8,11 +8,14 @@
 ul {
     display: flex;
 }
-li{
+.item-menu{
     display: flex;  
     padding: 5px 10px; 
     align-items: center;
     border-right: 1px solid;
+}
+.item-menu:hover {
+    background:  rgb(118, 181, 205);
 }
 .icon{
     width: 20px;

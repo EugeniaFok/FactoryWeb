@@ -18,13 +18,22 @@ label{
     font-size: small;
     color: rgb(97, 97, 97);
 }
-input{
+input#password, input#login{
     width: 230px;
 }
-.singin{
+.signin{
     border: none;
     background-color: skyblue;
     padding: 5px 0;
     margin-top: 10px;
     font-weight: bold;
+}
+.signin:hover {
+    background:  rgb(118, 181, 205);
+}
+.remember-check{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
 }

@@ -9,7 +9,7 @@ function Menu(){
             <div className="page-title">Factory</div>          
             <ul>
                 {PAGES.map(({ title, href, icon }) => (
-                    <li>
+                    <li class="item-menu">
                         <Link className='SectionNavigation-Item Section' to={href}>           
                             <img className='icon' src={icon} alt={title} />
                         </Link>
