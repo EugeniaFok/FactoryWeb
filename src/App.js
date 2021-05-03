@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+import React  from "react";
+import {
+  Switch,
+  Route,
+  Redirect,
+  withRouter
+} from "react-router-dom";
+
 import './App.css';
+import PAGES from './RoutePages';
+import Menu from './Menu';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Menu/>
+      <Switch>          
+          {PAGES.map(({ title, href, component }) =>
+            <Route path={href} component={component}/>
+          )}
+          <Redirect from='/' to='/home'/>
+      </Switch>
     </div>
   );
 }
 
-export default App;
+export default withRouter(App);

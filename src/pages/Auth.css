@@ -1,0 +1,30 @@
+.auth-panel{
+    margin: 0 auto;
+    width: 300px;
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: stretch;
+}
+.row-input{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0;
+    align-items: center;
+}
+label{
+    font-size: small;
+    color: rgb(97, 97, 97);
+}
+input{
+    width: 230px;
+}
+.singin{
+    border: none;
+    background-color: skyblue;
+    padding: 5px 0;
+    margin-top: 10px;
+    font-weight: bold;
+}
