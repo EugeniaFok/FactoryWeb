@@ -1,0 +1,23 @@
+.block-model{
+    display: flex;
+    height: 60px;
+}
+
+img.item-model {
+    width: 60px;
+    height: 60px;
+    border: 1px;
+    border: 2px solid white; 
+}
+img.item-model:hover {
+    border: 2px solid gray; 
+}
+img.item-model:focus {
+    border: 2px solid black; 
+    box-shadow: 1px 1px 1px grey;
+}
+
+.name-model{
+    align-items: center;
+    display: flex;  
+}

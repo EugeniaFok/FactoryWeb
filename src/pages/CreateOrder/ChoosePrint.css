@@ -1,0 +1,15 @@
+img.block-print{
+    border: 2px solid white;
+    width: 50px;
+    height: 30px; 
+    margin: 10px;
+}
+
+img.block-print:hover {
+    border: 2px solid grey; 
+}
+
+img.block-print:focus {
+    border: 2px solid black; 
+    box-shadow: 1px 1px 1px grey;
+}

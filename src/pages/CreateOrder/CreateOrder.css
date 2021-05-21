@@ -1,0 +1,23 @@
+.tablo-order-choose{
+    border: 1px solid black;
+    height: calc(100vh - 220px);
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    padding: 10px;
+}
+.control-choose{
+    margin: 10px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.tablo-order-create{
+    margin: 0 auto;
+    width: 300px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}

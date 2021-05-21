@@ -1,0 +1,16 @@
+button.block-size{
+    border: 1px solid black;
+    width: 50px;
+    height: 30px; 
+    margin: 10px;
+    background: white;
+}
+
+button.block-size:hover {
+    border: 2px solid grey; 
+}
+
+button.block-size:focus {
+    border: 2px solid black; 
+    box-shadow: 1px 1px 1px grey;
+}

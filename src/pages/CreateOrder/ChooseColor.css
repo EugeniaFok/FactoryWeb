@@ -1,0 +1,27 @@
+.tablo-order-choose > * + * {
+    margin-left: 20px;
+}
+
+.block-color {
+    display: flex;
+    height: 30px;
+}
+
+button.item-color {
+    width: 60px;
+    border: 1px;
+}
+button.item-color:hover {
+    border: 2px solid grey; 
+}
+button.item-color:focus {
+    border: 2px solid black; 
+    box-shadow: 1px 1px 1px grey;
+}
+
+.name-color {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+

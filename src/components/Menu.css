@@ -1,0 +1,28 @@
+.menu {
+    background-color: skyblue;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+}
+ul {
+    display: flex;
+}
+.item-menu{
+    display: flex;  
+    padding: 5px 10px; 
+    align-items: center;
+    border-right: 1px solid;
+}
+.item-menu:hover {
+    background:  rgb(118, 181, 205);
+}
+.icon{
+    width: 24px;
+    height: 24px;
+}
+.page-title{
+    padding: 0 20px;
+    font-weight: bold;
+    font-size: x-large;
+}
