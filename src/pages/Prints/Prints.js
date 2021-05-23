@@ -16,6 +16,8 @@ function Prints(props) {
 	const [curName, setName] = useState(false);
 	const [curId, setId] = useState(false);
 
+	const [print, setPrint] = useState();
+
 	useEffect(() => {
 		getList(url, list => dispatch(setListPrints(list)));
 	}, [dispatch, url]);
@@ -53,6 +55,7 @@ function Prints(props) {
 					}}
 				/>
 			</div>
+
 			<div className="tablo-area">
 				<div>
 					<input type="search" placeholder="Найти" />
@@ -63,7 +66,10 @@ function Prints(props) {
 						Id={id}
 						Name={name}
 						State={state}
-						onClick={() => {
+						select={() => {
+							alert(`You select print ${name}`);
+						}}
+						remove={() => {
 							setIsOpen(true);
 							setName(name);
 							setId(id);
@@ -89,12 +95,12 @@ function Prints(props) {
 function OrderRowPrints(props) {
 	return (
 		<div className="row_table">
-			<div className="">
+			<div className="wrapper" onClick={props.select}>
 				<div className="">{props.Id}</div>
 				<div className="">{props.Name}</div>
 				<div className="">{props.State}</div>
 			</div>
-			<div className="factory-btn-delete" onClick={props.onClick}>
+			<div className="factory-btn-delete" onClick={props.remove}>
 				Удалить
 			</div>
 		</div>

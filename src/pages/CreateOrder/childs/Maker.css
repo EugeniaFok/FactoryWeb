@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    width: 400px;
+    height: 400px;
+    position: relative;
+}
+
+.model {
+    width: 100%;
+    background-image: url(./contents/model.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.workspace {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 100px;
+    left: 148px;
+    border: 1px dashed transparent;
+}
+
+.workspace:hover {
+    border-color: #fff;
+}
+
+.print {
+    position: relative;
+}
+
+.print > img {
+    width: 100%;
+    height: 100%;
+}

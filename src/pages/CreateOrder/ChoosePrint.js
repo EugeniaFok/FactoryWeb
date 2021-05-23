@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setListPrints } from "../../store/reducer";
 import { getList } from "../../functions/functions";
+import { Maker } from "./childs/Maker";
 function ChoosePrint(props) {
 	const { listPrints } = useSelector(state => state);
 	const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function ChoosePrint(props) {
 	return (
 		<div>
 			<div className="caption-tablo">Выберите принт изделия:</div>
+			<Maker />
 			<div className="tablo-order-choose">
 				{listPrints.map(
 					({ id, name, width, height, type, contentsBase64 }) => (
