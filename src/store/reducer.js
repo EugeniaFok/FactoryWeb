@@ -1,6 +1,7 @@
 const initState = {
 	role: "",
 	order: {
+		color: "",
 		print: {
 			width: 50,
 			height: 50,
@@ -44,6 +45,10 @@ export const setListSizes = listSizes => ({
 	type: "SET_LIST_SIZES",
 	listSizes,
 });
+export const setColor = color => ({
+	type: "SET_COLOR",
+	color,
+});
 export const setPrintSize = size => ({
 	type: "SET_PRINT_SIZE",
 	size,
@@ -70,6 +75,14 @@ export const reducer = (state = initState, action) => {
 			return { ...state, listPrints: action.listPrints };
 		case "SET_LIST_SIZES":
 			return { ...state, listSizes: action.listSizes };
+		case "SET_COLOR":
+			return {
+				...state,
+				order: {
+					...state.order,
+					color: action.color,
+				},
+			};
 		case "SET_PRINT_CONTENT":
 			return {
 				...state,

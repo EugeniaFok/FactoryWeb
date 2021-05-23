@@ -4,24 +4,16 @@
 
 .block-color {
     display: flex;
+    width: 30px;
     height: 30px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: 1px 1px 4px 2px #ccc;
 }
 
-button.item-color {
-    width: 60px;
-    border: 1px;
-}
-button.item-color:hover {
-    border: 2px solid grey; 
-}
-button.item-color:focus {
-    border: 2px solid black; 
-    box-shadow: 1px 1px 1px grey;
-}
-
-.name-color {
-    display: flex;
-    align-items: center;
-    margin-left: 5px;
+.block-color.selected {
+    border: 1px solid #6ad66a;
+    box-shadow: none;
 }
 
