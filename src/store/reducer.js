@@ -1,5 +1,5 @@
 const initState = {
-	role: "",
+	role: "Client",
 	isAuth: false,
 	listOrders: [],
 	listUsers: [],

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import Auth from "./pages/Auth/Auth";
 import { RegisteredHandler } from "./functions/functions";
 import { useDispatch, useSelector } from "react-redux";
-import { changeIsAuth } from "./store/reducer";
+import { changeIsAuth, changeRole } from "./store/reducer";
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
 	<Route
@@ -29,10 +29,15 @@ const AuthRoute = ({ component: Component, auth, ...rest }) => (
 
 function App() {
 	const { isAuth } = useSelector(state => state);
+	const { role } = useSelector(state => state);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		RegisteredHandler(auth => dispatch(changeIsAuth(auth)));
+		RegisteredHandler(role => {
+			let isAuth = role !== null ? true : false;
+			dispatch(changeIsAuth(isAuth));
+			dispatch(changeRole("role"));
+		});
 	}, [dispatch]);
 
 	return (
@@ -41,13 +46,15 @@ function App() {
 			<Switch>
 				<AuthRoute path="/auth" component={Auth} auth={isAuth} />
 
-				{PAGES.map(({ title, href, component }) => (
-					<PrivateRoute
-						path={href}
-						auth={isAuth}
-						component={component}
-					/>
-				))}
+				{PAGES.filter(page => page.role.includes(role)).map(
+					({ title, href, component }) => (
+						<PrivateRoute
+							path={href}
+							auth={isAuth}
+							component={component}
+						/>
+					)
+				)}
 				<Redirect from="/" to="/home" />
 			</Switch>
 		</div>

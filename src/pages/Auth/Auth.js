@@ -1,6 +1,9 @@
 import "./Auth.css";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeRole } from "../../store/reducer";
+import { changePassword } from "../../functions/functions";
 
 const signinHandler = (login, password, rememberMe, callback) => () => {
 	const headers = new Headers();
@@ -31,11 +34,13 @@ function Auth() {
 	const [login, setLogin] = useState("");
 	const [password, setPassword] = useState("");
 	const [, setRegistered] = useState(false);
+	const dispatch = useDispatch();
 
 	const redirectHome = function () {
 		setRegistered(true);
 		window.location.reload();
 		history.push("/");
+		changePassword(role => dispatch(changeRole(role)));
 	};
 
 	return (
@@ -60,7 +65,9 @@ function Auth() {
 			</div>
 			<button
 				className="signin"
-				onClick={signinHandler(login, password, check, redirectHome)}
+				onClick={signinHandler(login, password, check, () => {
+					redirectHome();
+				})}
 			>
 				Войти
 			</button>

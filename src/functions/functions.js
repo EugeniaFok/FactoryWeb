@@ -8,13 +8,19 @@ export const RegisteredHandler = callback => {
 		headers,
 		redirect: "follow",
 		credentials: "include",
-	}).then(response => {
-		if (response.status === 200) {
-			callback(true);
-		} else {
-			callback(false);
-		}
-	});
+	})
+		.then(response => {
+			if (response.status === 200) {
+				return response.json();
+			}
+		})
+		.then(data => {
+			if (data === undefined) {
+				callback(null);
+			} else {
+				callback(data);
+			}
+		});
 };
 export const getList = (url, callback) => {
 	const headers = new Headers();

@@ -24,22 +24,29 @@ function Menu() {
 		newPassword: password,
 		newPassword2: password2,
 	};
+	const { role } = useSelector(state => state);
 
 	return (
 		<div>
 			<div className="menu">
 				<div className="page-title">Factory</div>
 				<ul>
-					{PAGES.map(({ title, href, icon }) => (
-						<Link
-							className="SectionNavigation-Item Section"
-							to={href}
-						>
-							<li className="item-menu">
-								<img className="icon" src={icon} alt={title} />
-							</li>
-						</Link>
-					))}
+					{PAGES.filter(page => page.role.includes(role)).map(
+						({ title, href, icon }) => (
+							<Link
+								className="SectionNavigation-Item Section"
+								to={href}
+							>
+								<li className="item-menu">
+									<img
+										className="icon"
+										src={icon}
+										alt={title}
+									/>
+								</li>
+							</Link>
+						)
+					)}
 					{isAuth === false ? (
 						<Link
 							className="SectionNavigation-Item Section"
