@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setColor } from "../../store/reducer";
+import { setColorId } from "../../store/reducer";
 import "./ChooseColor.css";
 
 function ChooseColor(props) {
 	const [colors, setColors] = useState([]);
 
-	const color = useSelector(state => state.order.color);
+	const colorId = useSelector(state => state.order.colorId);
 
 	const dispatch = useDispatch();
 
@@ -33,12 +33,12 @@ function ChooseColor(props) {
 					<div
 						key={id}
 						className={`block-color ${
-							color === id ? "selected" : ""
+							colorId === id ? "selected" : ""
 						}`}
 						style={{ backgroundColor: value }}
 						title={name}
 						onClick={() => {
-							dispatch(setColor(id));
+							dispatch(setColorId(id));
 						}}
 					></div>
 				))}
