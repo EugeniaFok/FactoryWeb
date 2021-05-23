@@ -1,60 +1,28 @@
 import "./Models.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { getListModels } from "../../store/reducer";
-import { useEffect } from "react";
-import { getList } from "../../functions/getList";
+import { setListModels } from "../../store/reducer";
+import { useEffect, useState } from "react";
+import { getList, deleteItem, createItem } from "../../functions/functions";
+import ModalConfirm from "../../components/Modal";
+import CreateItem from "../../components/CreateItem";
 
-const setConfirmOrder = callback => {
-	const url = "http://localhost:50000/api/Orders/{id}/confirm";
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	headers.append("Accept", "*/*");
-
-	fetch(url, {
-		method: "GET",
-		headers,
-		redirect: "follow",
-		credentials: "include",
-	})
-		.then(response => {
-			if (response.status === 200) {
-				return response.json();
-			}
-		})
-		.then(data => {
-			callback(data);
-		});
-};
-
-const setCancelOrder = callback => {
-	const url = "http://localhost:50000/api/Orders/{id}/confirm";
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	headers.append("Accept", "*/*");
-
-	fetch(url, {
-		method: "GET",
-		headers,
-		redirect: "follow",
-		credentials: "include",
-	})
-		.then(response => {
-			if (response.status === 200) {
-				return response.json();
-			}
-		})
-		.then(data => {
-			callback(data);
-		});
-};
 function Models() {
 	const { listModels } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = "http://localhost:50000/api/Models";
+	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenCreate, setIsOpenCreate] = useState(false);
+	const [curName, setName] = useState(false);
+	const [curId, setId] = useState(false);
+
+	const fieldsName = [
+		{ field: "name", title: "Наименование" },
+		{ field: "colorId", title: "Id цвета" },
+	];
 
 	useEffect(() => {
-		getList(url, list => dispatch(getListModels(list)));
+		getList(url, list => dispatch(setListModels(list)));
 	}, [dispatch]);
 
 	return (
@@ -66,8 +34,27 @@ function Models() {
 					src={IconRefresh}
 					alt="..."
 					onClick={() =>
-						getList(url, list => dispatch(getListModels(list)))
+						getList(url, list => dispatch(setListModels(list)))
 					}
+				/>
+				<button
+					className="factory-btn-create"
+					onClick={() => {
+						setIsOpenCreate(true);
+					}}
+				>
+					Создать
+				</button>
+				<CreateItem
+					isOpened={isOpenCreate}
+					fields={fieldsName}
+					onSetOk={() => {
+						setIsOpenCreate(false);
+						createItem(url);
+					}}
+					onSetCancel={() => {
+						setIsOpenCreate(false);
+					}}
 				/>
 			</div>
 			<div className="tablo-area">
@@ -76,24 +63,41 @@ function Models() {
 					<button onClick />
 				</div>
 				{listModels.map(({ Id, name }) => (
-					<OrderRowConfirm Id={Id} FullName={name} />
+					<OrderRowModels
+						Id={Id}
+						Name={name}
+						onClick={() => {
+							setIsOpen(true);
+							setName(name);
+							setId(Id);
+						}}
+					/>
 				))}
 			</div>
+			<ModalConfirm
+				isOpened={isOpen}
+				answer={"Удалить модель " + curName + "?"}
+				onSetOk={() => {
+					setIsOpen(false);
+					deleteItem("http://localhost:50000/api/Account/" + curId);
+				}}
+				onSetCancel={() => {
+					setIsOpen(false);
+				}}
+			/>
 		</div>
 	);
 }
 
-function OrderRowConfirm(props) {
+function OrderRowModels(props) {
 	return (
-		<div className="row_complete">
-			<div className="">{props.Id}</div>
-			<div className="">{props.FullName}</div>
-			<div className="">{props.Status}</div>
-			<div className="confirm" onClick={setConfirmOrder}>
-				Подтвердить
+		<div className="row_table">
+			<div className="">
+				<div className="">{props.Id}</div>
+				<div className="">{props.Name}</div>
 			</div>
-			<div className="delete" onClick={setCancelOrder}>
-				Отменить
+			<div className="factory-btn-delete" onClick={props.onClick}>
+				Удалить
 			</div>
 		</div>
 	);

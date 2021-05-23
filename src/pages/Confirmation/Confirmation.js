@@ -1,9 +1,9 @@
 import "./Confirmation.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { getListOrders } from "../../store/reducer";
+import { setListOrders } from "../../store/reducer";
 import { useEffect } from "react";
-import { getList } from "../../functions/getList";
+import { getList } from "../../functions/functions";
 
 const setConfirmOrder = callback => {
 	const url = "http://localhost:50000/api/Orders/{id}/confirm";
@@ -12,7 +12,7 @@ const setConfirmOrder = callback => {
 	headers.append("Accept", "*/*");
 
 	fetch(url, {
-		method: "GET",
+		method: "POST",
 		headers,
 		redirect: "follow",
 		credentials: "include",
@@ -28,13 +28,13 @@ const setConfirmOrder = callback => {
 };
 
 const setCancelOrder = callback => {
-	const url = "http://localhost:50000/api/Orders/{id}/confirm";
+	const url = "http://localhost:50000/api/Orders/{id}/cancel";
 	const headers = new Headers();
 	headers.append("Content-Type", "application/json");
 	headers.append("Accept", "*/*");
 
 	fetch(url, {
-		method: "GET",
+		method: "POST",
 		headers,
 		redirect: "follow",
 		credentials: "include",
@@ -54,7 +54,7 @@ function Confirmation(props) {
 	const url = "http://localhost:50000/api/Orders";
 
 	useEffect(() => {
-		getList(url, list => dispatch(getListOrders(list)));
+		getList(url, list => dispatch(setListOrders(list)));
 	}, [dispatch]);
 
 	return (
@@ -66,7 +66,7 @@ function Confirmation(props) {
 					src={IconRefresh}
 					alt="..."
 					onClick={() =>
-						getList(url, list => dispatch(getListOrders(list)))
+						getList(url, list => dispatch(setListOrders(list)))
 					}
 				/>
 			</div>
@@ -90,10 +90,12 @@ function Confirmation(props) {
 
 function OrderRowConfirm(props) {
 	return (
-		<div className="row_complete">
-			<div className="">{props.Id}</div>
-			<div className="">{props.FullName}</div>
-			<div className="">{props.Status}</div>
+		<div className="row_table">
+			<div className="">
+				<div className="">{props.Id}</div>
+				<div className="">{props.FullName}</div>
+				<div className="">{props.Status}</div>
+			</div>
 			<div className="confirm" onClick={setConfirmOrder}>
 				Подтвердить
 			</div>

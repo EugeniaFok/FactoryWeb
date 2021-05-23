@@ -13,28 +13,28 @@ export const changeRole = role => ({
 	type: "CHANGE_ROLE",
 	role,
 });
-export const getListOrders = listOrders => ({
-	type: "GET_LIST_ORDERS",
+export const setListOrders = listOrders => ({
+	type: "SET_LIST_ORDERS",
 	listOrders,
 });
-export const getListUsers = listUsers => ({
-	type: "GET_LIST_USERS",
+export const setListUsers = listUsers => ({
+	type: "SET_LIST_USERS",
 	listUsers,
 });
-export const getListColors = listColors => ({
-	type: "GET_LIST_COLORS",
+export const setListColors = listColors => ({
+	type: "SET_LIST_COLORS",
 	listColors,
 });
-export const getListModels = listModels => ({
-	type: "GET_LIST_MODELS",
+export const setListModels = listModels => ({
+	type: "SET_LIST_MODELS",
 	listModels,
 });
-export const getListPrints = listPrints => ({
-	type: "GET_LIST_PRINTS",
+export const setListPrints = listPrints => ({
+	type: "SET_LIST_PRINTS",
 	listPrints,
 });
-export const getListSizes = listSizes => ({
-	type: "GET_LIST_SIZES",
+export const setListSizes = listSizes => ({
+	type: "SET_LIST_SIZES",
 	listSizes,
 });
 
@@ -42,17 +42,17 @@ export const reducer = (state = initState, action) => {
 	switch (action.type) {
 		case "CHANGE_ROLE":
 			return { ...state, role: action.role };
-		case "GET_LIST_ORDERS":
+		case "SET_LIST_ORDERS":
 			return { ...state, listOrders: action.listOrders };
-		case "GET_LIST_USERS":
+		case "SET_LIST_USERS":
 			return { ...state, listUsers: action.listUsers };
-		case "GET_LIST_COLORS":
+		case "SET_LIST_COLORS":
 			return { ...state, listColors: action.listColors };
-		case "GET_LIST_MODELS":
+		case "SET_LIST_MODELS":
 			return { ...state, listModels: action.listModels };
-		case "GET_LIST_PRINTS":
+		case "SET_LIST_PRINTS":
 			return { ...state, listPrints: action.listPrints };
-		case "GET_LIST_SIZES":
+		case "SET_LIST_SIZES":
 			return { ...state, listSizes: action.listSizes };
 		default:
 			return state;

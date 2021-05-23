@@ -5,25 +5,7 @@ import { PAGES } from "./RoutePages";
 import Menu from "./components/Menu";
 import { useEffect, useState } from "react";
 import Auth from "./pages/Auth/Auth";
-
-const RegisteredHandler = callback => {
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	headers.append("Accept", "*/*");
-
-	fetch("http://localhost:50000/api/account/registered", {
-		method: "POST",
-		headers,
-		redirect: "follow",
-		credentials: "include",
-	}).then(response => {
-		if (response.status === 200) {
-			callback(true);
-		} else {
-			callback(false);
-		}
-	});
-};
+import { RegisteredHandler } from "./functions/functions";
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
 	<Route
@@ -45,6 +27,7 @@ const AuthRoute = ({ component: Component, auth, ...rest }) => (
 
 function App() {
 	const [auth, setAuth] = useState(false);
+
 	useEffect(() => {
 		RegisteredHandler(setAuth);
 	}, []);

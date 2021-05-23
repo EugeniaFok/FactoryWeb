@@ -21,3 +21,10 @@
     flex-direction: column;
     align-items: stretch;
 }
+button.createOrder{
+    height: 30px;
+    background-color: skyblue; 
+}
+button.createOrder:hover {
+    background:  rgb(118, 181, 205);
+}

@@ -1,100 +1,101 @@
 import "./Prints.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { getListPrints } from "../../store/reducer";
-import { useEffect } from "react";
-import { getList } from "../../functions/getList";
+import { setListPrints } from "../../store/reducer";
+import { useEffect, useState } from "react";
+import { getList, deleteItem, createItem } from "../../functions/functions";
+import ModalConfirm from "../../components/Modal";
+import CreatePrint from "../../components/CreatePrint";
 
-const setConfirmOrder = callback => {
-	const url = "http://localhost:50000/api/Orders/{id}/confirm";
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	headers.append("Accept", "*/*");
-
-	fetch(url, {
-		method: "GET",
-		headers,
-		redirect: "follow",
-		credentials: "include",
-	})
-		.then(response => {
-			if (response.status === 200) {
-				return response.json();
-			}
-		})
-		.then(data => {
-			callback(data);
-		});
-};
-
-const setCancelOrder = callback => {
-	const url = "http://localhost:50000/api/Orders/{id}/confirm";
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	headers.append("Accept", "*/*");
-
-	fetch(url, {
-		method: "GET",
-		headers,
-		redirect: "follow",
-		credentials: "include",
-	})
-		.then(response => {
-			if (response.status === 200) {
-				return response.json();
-			}
-		})
-		.then(data => {
-			callback(data);
-		});
-};
 function Prints(props) {
 	const { listPrints } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Images";
+	const url = "http://localhost:50000/api/Images/";
+	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenCreate, setIsOpenCreate] = useState(false);
+	const [curName, setName] = useState(false);
+	const [curId, setId] = useState(false);
 
 	useEffect(() => {
-		getList(url, list => dispatch(getListPrints(list)));
+		getList(url, list => dispatch(setListPrints(list)));
 	}, [dispatch]);
 
 	return (
 		<div className="">
 			<div className="caption-page">
 				Принты
-				<img
-					className="refresh icon"
-					src={IconRefresh}
-					alt="..."
-					onClick={() =>
-						getList(url, list => dispatch(getListPrints(list)))
-					}
+				<div className="">
+					<img
+						className="refresh icon"
+						src={IconRefresh}
+						alt="..."
+						onClick={() =>
+							getList(url, list => dispatch(setListPrints(list)))
+						}
+					/>
+					<button
+						className="factory-btn-create"
+						onClick={() => {
+							setIsOpenCreate(true);
+						}}
+					>
+						Создать
+					</button>
+				</div>
+				<CreatePrint
+					isOpened={isOpenCreate}
+					onSetOk={() => {
+						setIsOpenCreate(false);
+						createItem(url);
+					}}
+					onSetCancel={() => {
+						setIsOpenCreate(false);
+					}}
 				/>
 			</div>
-
 			<div className="tablo-area">
 				<div>
-					<input type="text" placeholder="Найти" />
+					<input type="search" placeholder="Найти" />
 					<button onClick />
 				</div>
-				{listPrints.map(({ Id, name, state }) => (
-					<OrderRowConfirm Id={Id} FullName={name} Status={state} />
+				{listPrints.map(({ id, name, state }) => (
+					<OrderRowPrints
+						Id={id}
+						Name={name}
+						State={state}
+						onClick={() => {
+							setIsOpen(true);
+							setName(name);
+							setId(id);
+						}}
+					/>
 				))}
 			</div>
+			<ModalConfirm
+				isOpened={isOpen}
+				answer={"Удалить пользовтеля " + curName + "?"}
+				onSetOk={() => {
+					setIsOpen(false);
+					deleteItem(url + curId);
+				}}
+				onSetCancel={() => {
+					setIsOpen(false);
+				}}
+			/>
 		</div>
 	);
 }
 
-function OrderRowConfirm(props) {
+function OrderRowPrints(props) {
 	return (
-		<div className="row_complete">
-			<div className="">{props.Id}</div>
-			<div className="">{props.FullName}</div>
-			<div className="">{props.Status}</div>
-			<div className="confirm" onClick={setConfirmOrder}>
-				Подтвердить
+		<div className="row_table">
+			<div className="">
+				<div className="">{props.Id}</div>
+				<div className="">{props.Name}</div>
+				<div className="">{props.State}</div>
 			</div>
-			<div className="delete" onClick={setCancelOrder}>
-				Отменить
+			<div className="factory-btn-delete" onClick={props.onClick}>
+				Удалить
 			</div>
 		</div>
 	);

@@ -1,11 +1,14 @@
-.row_complete {
-    background-color: rgb(60,179,113, 0.2);
-    border-bottom: 1px solid grey;
+.row_table {
+    border: 1px solid lightgray;
     border-spacing: 2px;
-    margin: 10px;
-    /* text-align: center; */
+    margin: 2px;
+    display: flex;
+    justify-content: flex-end;
+    height: 30px;
  }
 .row_processing {
      border-bottom: 1px solid grey;
-     border-spacing: 2px
  }
+.row_complete {
+    background-color: rgb(60,179,113, 0.2);
+}

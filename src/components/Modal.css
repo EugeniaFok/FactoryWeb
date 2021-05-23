@@ -1,0 +1,17 @@
+.modal{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background: rgb(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);   
+    height: 100%;
+}
+.modal-panel{
+    width: 500px;
+    margin: auto;
+    background: white;
+    margin-top: 5%;
+    padding: 20px;
+    display: block;
+    /* overflow-y: scroll; */
+}

@@ -54,3 +54,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.factory-btn{
+	width: 150px;
+	height: 30px;
+	background: skyblue;
+}
+.factory-btn:hover{
+	background:  rgb(118, 181, 205);
+}
+.factory-btn-delete{
+	width: 150px;
+	height: 30px;
+	background: red;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.factory-btn-delete:hover{
+	background:  rgb(145, 1, 1);
+}
+.factory-btn-create{
+	width: 150px;
+	height: 30px;
+	background: lightgreen;
+}
+.factory-btn-create:hover{
+	background:  rgb(93, 151, 93);
+}

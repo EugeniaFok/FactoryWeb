@@ -1,37 +1,26 @@
 import "./ChooseSize.css";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setListSizes } from "../../store/reducer";
+import { getList } from "../../functions/functions";
 
 function ChooseSize(props) {
+	const { listSizes } = useSelector(state => state);
+	const dispatch = useDispatch();
+	const url = "http://localhost:50000/api/Sizes";
+
 	useEffect(() => {
-		sizesList(alert);
-	}, []);
+		getList(url, list => dispatch(setListSizes(list)));
+	}, [dispatch]);
 
-	const sizesList = callback => () => {
-		const headers = new Headers();
-		headers.append("Content-Type", "application/json");
-		headers.append("Accept", "*/*");
-
-		fetch("http://localhost:50000/api/Sizes", {
-			method: "GET",
-			headers,
-			redirect: "follow",
-			credentials: "include",
-		}).then(response => {
-			if (response.status) {
-				callback(response.text);
-			}
-		});
-	};
 	return (
-		<div className="tablo-order-choose">
-			{/* {props.colors.map(({ name, value }) =>
-                <button className="block-size">  
-                    {value}
-                </button> 
-            )} */}
-			<button className="block-size">XSS</button>
-			<button className="block-size">XS</button>
-			<button className="block-size">S</button>
+		<div>
+			<div className="caption-tablo">Выберите размер:</div>
+			<div className="tablo-order-choose">
+				{listSizes.map(({ value }) => (
+					<button className="block-size">{value}</button>
+				))}
+			</div>
 		</div>
 	);
 }

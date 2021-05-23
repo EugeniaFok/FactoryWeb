@@ -2,15 +2,17 @@ import "./Tablo.css";
 import OrderRow from "./OrderRow";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { getListOrders } from "../../store/reducer";
+import { setListOrders } from "../../store/reducer";
 import { useEffect } from "react";
+import { getList } from "../../functions/functions";
 
 function Tablo() {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
+	const url = "http://localhost:50000/api/Orders";
 
 	useEffect(() => {
-		getOrders(list => dispatch(getListOrders(list)));
+		getList(url, list => dispatch(setListOrders(list)));
 	}, [dispatch]);
 
 	return (
@@ -22,7 +24,7 @@ function Tablo() {
 					src={IconRefresh}
 					alt="..."
 					onClick={() =>
-						getOrders(list => dispatch(getListOrders(list)))
+						getList(url, list => dispatch(setListOrders(list)))
 					}
 				/>
 			</div>
@@ -39,29 +41,6 @@ function Tablo() {
 		</div>
 	);
 }
-
-const getOrders = callback => {
-	const url = "http://localhost:50000/api/Orders"; //"http://localhost:50000/api/Orders/forBoard"
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	headers.append("Accept", "*/*");
-
-	fetch(url, {
-		method: "GET",
-		headers,
-		redirect: "follow",
-		credentials: "include",
-	})
-		.then(response => {
-			if (response.status === 200) {
-				return response.json();
-			}
-		})
-		.then(data => {
-			callback(data);
-		});
-};
-
 function TabloPanel(props) {
 	const { listOrders } = props;
 

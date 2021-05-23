@@ -26,7 +26,7 @@ function CreateOrder() {
 			)}
 			<div className="control-choose">
 				<button
-					className=""
+					className="factory-btn"
 					onClick={() => {
 						let prevIndex = phases.indexOf(phase) - 1;
 						let curPhase =
@@ -34,10 +34,10 @@ function CreateOrder() {
 						setPhase(curPhase);
 					}}
 				>
-					Назад
+					⮜ Назад
 				</button>
 				<button
-					className=""
+					className="factory-btn"
 					onClick={() => {
 						let nextIndex = phases.indexOf(phase) + 1;
 						let curPhase =
@@ -47,7 +47,7 @@ function CreateOrder() {
 						setPhase(curPhase);
 					}}
 				>
-					Вперед
+					Вперед ⮞
 				</button>
 			</div>
 		</div>
