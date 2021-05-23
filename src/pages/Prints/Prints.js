@@ -1,7 +1,7 @@
 import "./Prints.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setListPrints } from "../../store/reducer";
+import { setPrints } from "../../store/reducer";
 import { useEffect, useState } from "react";
 import {
 	getList,
@@ -38,10 +38,8 @@ function Prints(props) {
 		id: "",
 	};
 
-	const [print, setPrint] = useState();
-
 	useEffect(() => {
-		getList(url, list => dispatch(setListPrints(list)));
+		getList(url, list => dispatch(setPrints(list)));
 	}, [dispatch, url]);
 
 	return (
@@ -54,7 +52,7 @@ function Prints(props) {
 						src={IconRefresh}
 						alt="..."
 						onClick={() =>
-							getList(url, list => dispatch(setListPrints(list)))
+							getList(url, list => dispatch(setPrints(list)))
 						}
 					/>
 					<button
@@ -73,7 +71,7 @@ function Prints(props) {
 						createItem(url, newPrint, id => {
 							newPrint.id = id;
 							dispatch(
-								setListPrints(addListItem(listPrints, newPrint))
+								setPrints(addListItem(listPrints, newPrint))
 							);
 						});
 					}}
@@ -129,7 +127,7 @@ function Prints(props) {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
 						dispatch(
-							setListPrints(deleteListItemId(listPrints, curId))
+							setPrints(deleteListItemId(listPrints, curId))
 						);
 					});
 				}}

@@ -1,7 +1,7 @@
 import "./Models.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setListModels, setListColors } from "../../store/reducer";
+import { setModels, setColors } from "../../store/reducer";
 import { useEffect, useState } from "react";
 import {
 	getList,
@@ -27,8 +27,8 @@ function Models() {
 	let newModel = { name: newName, colorId: newColorId, id: "" };
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListModels(list)));
-	}, [dispatch]);
+		getList(url, list => dispatch(setModels(list)));
+	}, [dispatch, url]);
 
 	return (
 		<div className="">
@@ -40,7 +40,7 @@ function Models() {
 						src={IconRefresh}
 						alt="..."
 						onClick={() =>
-							getList(url, list => dispatch(setListModels(list)))
+							getList(url, list => dispatch(setModels(list)))
 						}
 					/>
 					<button
@@ -59,7 +59,7 @@ function Models() {
 						createItem(url, newModel, id => {
 							newModel.id = id;
 							dispatch(
-								setListModels(addListItem(listModels, newModel))
+								setModels(addListItem(listModels, newModel))
 							);
 						});
 					}}
@@ -102,7 +102,7 @@ function Models() {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
 						dispatch(
-							setListModels(deleteListItemId(listModels, curId))
+							setModels(deleteListItemId(listModels, curId))
 						);
 					});
 				}}
@@ -120,7 +120,7 @@ function CreateNewModels(props) {
 	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListColors(list)));
+		getList(url, list => dispatch(setColors(list)));
 	}, [dispatch]);
 
 	return (

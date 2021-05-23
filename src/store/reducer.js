@@ -12,10 +12,10 @@ const initState = {
 	},
 	listOrders: [],
 	listUsers: [],
-	listColors: [],
-	listModels: [],
-	listPrints: [],
-	listSizes: [],
+	colors: [],
+	models: [],
+	prints: [],
+	sizes: [],
 };
 
 // ACTIONS
@@ -31,22 +31,24 @@ export const setListUsers = listUsers => ({
 	type: "SET_LIST_USERS",
 	listUsers,
 });
-export const setListColors = listColors => ({
-	type: "SET_LIST_COLORS",
-	listColors,
+
+export const setColors = colors => ({
+	type: "SET_COLORS",
+	colors,
 });
-export const setListModels = listModels => ({
-	type: "SET_LIST_MODELS",
-	listModels,
+export const setModels = models => ({
+	type: "SET_MODELS",
+	models,
 });
-export const setListPrints = listPrints => ({
-	type: "SET_LIST_PRINTS",
-	listPrints,
+export const setPrints = prints => ({
+	type: "SET_PRINTS",
+	prints,
 });
-export const setListSizes = listSizes => ({
-	type: "SET_LIST_SIZES",
-	listSizes,
+export const setSizes = sizes => ({
+	type: "SET_SIZES",
+	sizes,
 });
+
 export const setColorId = colorId => ({
 	type: "SET_COLOR_ID",
 	colorId,
@@ -77,14 +79,14 @@ export const reducer = (state = initState, action) => {
 			return { ...state, listOrders: action.listOrders };
 		case "SET_LIST_USERS":
 			return { ...state, listUsers: action.listUsers };
-		case "SET_LIST_COLORS":
-			return { ...state, listColors: action.listColors };
-		case "SET_LIST_MODELS":
-			return { ...state, listModels: action.listModels };
-		case "SET_LIST_PRINTS":
-			return { ...state, listPrints: action.listPrints };
-		case "SET_LIST_SIZES":
-			return { ...state, listSizes: action.listSizes };
+		case "SET_COLORS":
+			return { ...state, colors: action.colors };
+		case "SET_MODELS":
+			return { ...state, models: action.models };
+		case "SET_PRINTS":
+			return { ...state, prints: action.prints };
+		case "SET_SIZES":
+			return { ...state, sizes: action.sizes };
 		case "SET_COLOR_ID":
 			return {
 				...state,

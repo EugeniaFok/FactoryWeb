@@ -1,7 +1,7 @@
 import "./Colors.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setListColors } from "../../store/reducer";
+import { setColors } from "../../store/reducer";
 import { useEffect, useState } from "react";
 import {
 	getList,
@@ -26,8 +26,8 @@ function Colors() {
 	let newColor = { name: newName, value: newValue, id: "" };
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListColors(list)));
-	}, [dispatch]);
+		getList(url, list => dispatch(setColors(list)));
+	}, [dispatch, url]);
 
 	return (
 		<div className="">
@@ -39,7 +39,7 @@ function Colors() {
 						src={IconRefresh}
 						alt="..."
 						onClick={() =>
-							getList(url, list => dispatch(setListColors(list)))
+							getList(url, list => dispatch(setColors(list)))
 						}
 					/>
 					<button
@@ -58,7 +58,7 @@ function Colors() {
 						createItem(url, newColor, id => {
 							newColor.id = id;
 							dispatch(
-								setListColors(addListItem(listColors, newColor))
+								setColors(addListItem(listColors, newColor))
 							);
 						});
 					}}
@@ -101,7 +101,7 @@ function Colors() {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
 						dispatch(
-							setListColors(deleteListItemId(listColors, curId))
+							setColors(deleteListItemId(listColors, curId))
 						);
 					});
 				}}

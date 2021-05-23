@@ -1,7 +1,7 @@
 import "./Sizes.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setListSizes } from "../../store/reducer";
+import { setSizes } from "../../store/reducer";
 import { useEffect, useState } from "react";
 import {
 	getList,
@@ -27,8 +27,8 @@ function Sizes(props) {
 	let newSize = { name: newName, value: newValue, id: "" };
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListSizes(list)));
-	}, [dispatch]);
+		getList(url, list => dispatch(setSizes(list)));
+	}, [dispatch, url]);
 
 	return (
 		<div className="">
@@ -40,7 +40,7 @@ function Sizes(props) {
 						src={IconRefresh}
 						alt="..."
 						onClick={() =>
-							getList(url, list => dispatch(setListSizes(list)))
+							getList(url, list => dispatch(setSizes(list)))
 						}
 					/>
 					<button
@@ -58,9 +58,7 @@ function Sizes(props) {
 						setIsOpenCreate(false);
 						createItem(url, newSize, id => {
 							newSize.id = id;
-							dispatch(
-								setListSizes(addListItem(listSizes, newSize))
-							);
+							dispatch(setSizes(addListItem(listSizes, newSize)));
 						});
 					}}
 					onSetCancel={() => {
@@ -85,7 +83,7 @@ function Sizes(props) {
 						onChange={event => {
 							if (event.target.value !== null) {
 								dispatch(
-									setListSizes(
+									setSizes(
 										setFilterList(
 											listSizes,
 											event.target.value
@@ -116,9 +114,7 @@ function Sizes(props) {
 				onSetOk={() => {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
-						dispatch(
-							setListSizes(deleteListItemId(listSizes, curId))
-						);
+						dispatch(setSizes(deleteListItemId(listSizes, curId)));
 					});
 				}}
 				onSetCancel={() => {

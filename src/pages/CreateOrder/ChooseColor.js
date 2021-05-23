@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setColorId } from "../../store/reducer";
+import { setColorId, setColors } from "../../store/reducer";
 import "./ChooseColor.css";
 
 function ChooseColor(props) {
-	const [colors, setColors] = useState([]);
+	const { colorId, colors } = useSelector(state => {
+		const { colorId } = state.order;
+		const { colors } = state;
 
-	const colorId = useSelector(state => state.order.colorId);
+		return { colors, colorId };
+	});
 
 	const dispatch = useDispatch();
 
@@ -21,9 +24,9 @@ function ChooseColor(props) {
 			);
 			const colors = await response.json();
 
-			setColors(colors);
+			dispatch(setColors(colors));
 		})();
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div>

@@ -4,8 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPrintSize } from "../../../store/reducer";
 
 export const Maker = props => {
-	// const { print } = props;
-	const { width, height, base64 } = useSelector(state => state.order.print);
+	const {
+		color,
+		model,
+		size,
+		print: { width, height, base64 },
+	} = useSelector(state => {
+		const { colorId, modelId, sizeId, print } = state.order;
+		const { colors, models, sizes } = state;
+
+		return {
+			color: colors.find(color => color.id === colorId),
+			model: models.find(model => model.id === modelId),
+			size: sizes.find(size => size.id === sizeId),
+			print,
+		};
+	});
+	// const { width, height, base64 } = useSelector();
 
 	const dispatch = useDispatch();
 
@@ -46,7 +61,7 @@ export const Maker = props => {
 					) : null}
 				</div>
 				<div className="maker_wrapper__description">
-					{`Цвет: Синий, Модель: Футболка, Размер: XL`}
+					{`Цвет: ${color.name}, Модель: ${model?.name}, Размер: ${size?.value}`}
 				</div>
 			</div>
 		</div>

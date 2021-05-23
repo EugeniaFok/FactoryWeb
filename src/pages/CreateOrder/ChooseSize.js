@@ -1,12 +1,15 @@
 import "./ChooseSize.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSizeId } from "../../store/reducer";
+import { setSizeId, setSizes } from "../../store/reducer";
 
 function ChooseSize(props) {
-	const [sizes, setSizes] = useState([]);
+	const { sizeId, sizes } = useSelector(state => {
+		const { sizeId } = state.order;
+		const { sizes } = state;
 
-	const sizeId = useSelector(state => state.order.sizeId);
+		return { sizeId, sizes };
+	});
 
 	const dispatch = useDispatch();
 
@@ -21,9 +24,9 @@ function ChooseSize(props) {
 			);
 			const sizes = await response.json();
 
-			setSizes(sizes);
+			dispatch(setSizes(sizes));
 		})();
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div>

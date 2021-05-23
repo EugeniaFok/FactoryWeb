@@ -1,12 +1,15 @@
 import "./ChooseModel.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setModelId } from "../../store/reducer";
+import { setModelId, setModels } from "../../store/reducer";
 
 function ChooseModel(props) {
-	const [models, setModels] = useState([]);
+	const { modelId, colorId, models } = useSelector(state => {
+		const { modelId, colorId } = state.order;
+		const { models } = state;
 
-	const { modelId, colorId } = useSelector(state => state.order);
+		return { modelId, colorId, models };
+	});
 
 	const dispatch = useDispatch();
 
@@ -21,9 +24,9 @@ function ChooseModel(props) {
 			);
 			const models = await response.json();
 
-			setModels(models);
+			dispatch(setModels(models));
 		})();
-	}, []);
+	}, [dispatch]);
 	return (
 		<div>
 			<div className="caption-tablo">Выберите модель изделия:</div>
