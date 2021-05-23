@@ -7,7 +7,7 @@ import { getList } from "../../functions/functions";
 function ChooseColor(props) {
 	const { listColors } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Colors";
+	const url = "http://${process.env.REACT_APP_HOST}/api/Colors";
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListColors(list)));

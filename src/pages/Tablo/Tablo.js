@@ -9,7 +9,7 @@ import { getList } from "../../functions/functions";
 function Tablo() {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Orders";
+	const url = `http://${process.env.REACT_APP_HOST}/api/Orders`;
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListOrders(list)));

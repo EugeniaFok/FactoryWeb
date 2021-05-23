@@ -17,7 +17,7 @@ import CreateItem from "../../components/CreateItem";
 function Sizes(props) {
 	const { listSizes } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Sizes/";
+	const url = `http://${process.env.REACT_APP_HOST}/api/Sizes/`;
 	const [isOpen, setIsOpen] = useState(false);
 	const [curValue, setValue] = useState(false);
 	const [curId, setId] = useState(false);
@@ -51,47 +51,31 @@ function Sizes(props) {
 					>
 						Создать
 					</button>
-					<CreateItem
-						isOpened={isOpenCreate}
-						onSetOk={() => {
-							setIsOpenCreate(false);
-							createItem(url, newSize, id => {
-								newSize.id = id;
-								dispatch(
-									setListSizes(
-										addListItem(listSizes, newSize)
-									)
-								);
-							});
-						}}
-						onSetCancel={() => {
-							setIsOpenCreate(false);
-						}}
-					>
-						<div className="row-input">
-							<label for="name">Наименование</label>
-							<input
-								type="text"
-								id="name"
-								placeholder="Введите размер"
-								onChange={event =>
-									setNewName(event.target.value)
-								}
-							/>
-						</div>
-						<div className="row-input">
-							<label for="value">Код цвета</label>
-							<input
-								type="text"
-								id="value"
-								placeholder="Введите код размера"
-								onChange={event =>
-									setNewValue(event.target.value)
-								}
-							/>
-						</div>
-					</CreateItem>
 				</div>
+				<CreateItem
+					isOpened={isOpenCreate}
+					onSetOk={() => {
+						setIsOpenCreate(false);
+						createItem(url, newSize, id => {
+							newSize.id = id;
+							dispatch(
+								setListSizes(addListItem(listSizes, newSize))
+							);
+						});
+					}}
+					onSetCancel={() => {
+						setIsOpenCreate(false);
+					}}
+				>
+					<CreateNewSize
+						onSetName={name => {
+							setNewName(name);
+						}}
+						onSetValue={value => {
+							setNewValue(value);
+						}}
+					/>
+				</CreateItem>
 			</div>
 			<div className="tablo-area">
 				<div>
@@ -141,6 +125,30 @@ function Sizes(props) {
 					setIsOpen(false);
 				}}
 			/>
+		</div>
+	);
+}
+function CreateNewSize(props) {
+	return (
+		<div>
+			<div className="row-input">
+				<label for="name">Наименование</label>
+				<input
+					type="text"
+					id="name"
+					placeholder="Введите размер"
+					onChange={event => props.onSetName(event.target.value)}
+				/>
+			</div>
+			<div className="row-input">
+				<label for="value">Краткий код размера</label>
+				<input
+					type="text"
+					id="value"
+					placeholder="Введите код размера"
+					onChange={event => props.onSetValue(event.target.value)}
+				/>
+			</div>
 		</div>
 	);
 }

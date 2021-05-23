@@ -8,6 +8,7 @@ import {
 	deleteItem,
 	createItem,
 	addListItem,
+	deleteListItemId,
 } from "../../functions/functions";
 import ModalConfirm from "../../components/Modal";
 import CreateItem from "../../components/CreateItem";
@@ -15,13 +16,14 @@ import CreateItem from "../../components/CreateItem";
 function Colors() {
 	const { listColors } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Colors/";
-	const [isOpenModal, setIsOpenModal] = useState(false);
+	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
+	const [isOpenModal, setIsOpen] = useState(false);
 	const [isOpenCreate, setIsOpenCreate] = useState(false);
 	const [curName, setName] = useState(false);
 	const [curId, setId] = useState(false);
 	const [newName, setNewName] = useState("");
 	const [newValue, setNewValue] = useState("");
+	let newColor = { name: newName, value: newValue, id: "" };
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListColors(list)));
@@ -53,34 +55,25 @@ function Colors() {
 					isOpened={isOpenCreate}
 					onSetOk={() => {
 						setIsOpenCreate(false);
-						createItem(
-							url,
-							{ name: newName, value: newValue },
-							addListItem()
-						);
+						createItem(url, newColor, id => {
+							newColor.id = id;
+							dispatch(
+								setListColors(addListItem(listColors, newColor))
+							);
+						});
 					}}
 					onSetCancel={() => {
 						setIsOpenCreate(false);
 					}}
 				>
-					<div className="row-input">
-						<label for="name">"Наименование"</label>
-						<input
-							type="text"
-							id="name"
-							placeholder="Введите цвет"
-							onChange={event => setNewName(event.target.value)}
-						/>
-					</div>
-					<div className="row-input">
-						<label for="value">"Код цвета"</label>
-						<input
-							type="text"
-							id="value"
-							placeholder="Введите код цвета"
-							onChange={event => setNewValue(event.target.value)}
-						/>
-					</div>
+					<CreateNewColors
+						onSetName={name => {
+							setNewName(name);
+						}}
+						onSetValue={value => {
+							setNewValue(value);
+						}}
+					/>
 				</CreateItem>
 			</div>
 			<div className="tablo-area">
@@ -94,7 +87,7 @@ function Colors() {
 						Name={name}
 						Value={value}
 						onClick={() => {
-							setIsOpenModal(true);
+							setIsOpen(true);
 							setName(name);
 							setId(id);
 						}}
@@ -105,13 +98,42 @@ function Colors() {
 				isOpened={isOpenModal}
 				answer={"Удалить " + curName + " цвет?"}
 				onSetOk={() => {
-					setIsOpenModal(false);
-					deleteItem(url + curId);
+					setIsOpen(false);
+					deleteItem(url + curId, () => {
+						dispatch(
+							setListColors(deleteListItemId(listColors, curId))
+						);
+					});
 				}}
 				onSetCancel={() => {
-					setIsOpenModal(false);
+					setIsOpen(false);
 				}}
 			/>
+		</div>
+	);
+}
+
+function CreateNewColors(props) {
+	return (
+		<div>
+			<div className="row-input">
+				<label for="name">Наименование</label>
+				<input
+					type="text"
+					id="name"
+					placeholder="Введите цвет"
+					onChange={event => props.onSetName(event.target.value)}
+				/>
+			</div>
+			<div className="row-input">
+				<label for="value">HEX код цвета</label>
+				<input
+					type="text"
+					id="value"
+					placeholder="Введите HEX"
+					onChange={event => props.onSetValue(event.target.value)}
+				/>
+			</div>
 		</div>
 	);
 }

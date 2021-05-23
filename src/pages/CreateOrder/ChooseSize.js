@@ -7,7 +7,7 @@ import { getList } from "../../functions/functions";
 function ChooseSize(props) {
 	const { listSizes } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Sizes";
+	const url = "http://${process.env.REACT_APP_HOST}/api/Sizes";
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListSizes(list)));
