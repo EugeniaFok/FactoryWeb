@@ -12,7 +12,7 @@ const signinHandler = (login, password, rememberMe, callback) => () => {
 		RememberMe: rememberMe,
 	});
 
-	fetch("http://localhost:50000/api/account/login", {
+	fetch(`http://${process.env.REACT_APP_HOST}/api/account/login`, {
 		method: "POST",
 		headers,
 		body: raw,

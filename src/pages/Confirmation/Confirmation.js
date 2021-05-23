@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { getList } from "../../functions/functions";
 
 const setConfirmOrder = callback => {
-	const url = "http://localhost:50000/api/Orders/{id}/confirm";
+	const url = "http://${process.env.REACT_APP_HOST}/api/Orders/{id}/confirm";
 	const headers = new Headers();
 	headers.append("Content-Type", "application/json");
 	headers.append("Accept", "*/*");
@@ -28,7 +28,7 @@ const setConfirmOrder = callback => {
 };
 
 const setCancelOrder = callback => {
-	const url = "http://localhost:50000/api/Orders/{id}/cancel";
+	const url = "http://${process.env.REACT_APP_HOST}/api/Orders/{id}/cancel";
 	const headers = new Headers();
 	headers.append("Content-Type", "application/json");
 	headers.append("Accept", "*/*");
@@ -51,7 +51,7 @@ const setCancelOrder = callback => {
 function Confirmation(props) {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Orders";
+	const url = `http://${process.env.REACT_APP_HOST}/api/Orders`;
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListOrders(list)));

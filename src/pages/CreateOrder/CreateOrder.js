@@ -77,7 +77,7 @@ const createOrderHandler =
 			clientPhone: phone,
 		});
 
-		fetch("http://localhost:50000/api/Orders", {
+		fetch(`http://${process.env.REACT_APP_HOST}/api/Orders`, {
 			method: "POST",
 			headers,
 			body: raw,

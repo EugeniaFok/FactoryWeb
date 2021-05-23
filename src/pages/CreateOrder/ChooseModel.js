@@ -7,7 +7,7 @@ import { getList } from "../../functions/functions";
 function ChooseModel(props) {
 	const { listModels } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Models";
+	const url = "http://${process.env.REACT_APP_HOST}/api/Models";
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListModels(list)));
