@@ -1,7 +1,6 @@
 import "./ChooseModel.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon } from "semantic-ui-react";
 import { setModelId } from "../../store/reducer";
 
 function ChooseModel(props) {

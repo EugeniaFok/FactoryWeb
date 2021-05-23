@@ -1,16 +1,16 @@
-button.block-size{
-    border: 1px solid black;
-    width: 50px;
-    height: 30px; 
-    margin: 10px;
-    background: white;
+.block-size {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 4px 2px #ccc;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-button.block-size:hover {
-    border: 2px solid grey; 
-}
-
-button.block-size:focus {
-    border: 2px solid black; 
-    box-shadow: 1px 1px 1px grey;
+.block-size.selected {
+    background-color: #5eeba4;
+    color: #fff;
 }

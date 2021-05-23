@@ -3,6 +3,7 @@ const initState = {
 	order: {
 		colorId: "",
 		modelId: "",
+		sizeId: "",
 		print: {
 			width: 50,
 			height: 50,
@@ -54,6 +55,10 @@ export const setModelId = modelId => ({
 	type: "SET_MODEL_ID",
 	modelId,
 });
+export const setSizeId = sizeId => ({
+	type: "SET_SIZE_ID",
+	sizeId,
+});
 export const setPrintSize = size => ({
 	type: "SET_PRINT_SIZE",
 	size,
@@ -80,6 +85,14 @@ export const reducer = (state = initState, action) => {
 			return { ...state, listPrints: action.listPrints };
 		case "SET_LIST_SIZES":
 			return { ...state, listSizes: action.listSizes };
+		case "SET_COLOR_ID":
+			return {
+				...state,
+				order: {
+					...state.order,
+					colorId: action.colorId,
+				},
+			};
 		case "SET_MODEL_ID":
 			return {
 				...state,
@@ -88,12 +101,12 @@ export const reducer = (state = initState, action) => {
 					modelId: action.modelId,
 				},
 			};
-		case "SET_COLOR_ID":
+		case "SET_SIZE_ID":
 			return {
 				...state,
 				order: {
 					...state.order,
-					colorId: action.colorId,
+					sizeId: action.sizeId,
 				},
 			};
 		case "SET_PRINT_CONTENT":

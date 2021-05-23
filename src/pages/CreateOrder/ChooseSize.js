@@ -1,24 +1,47 @@
 import "./ChooseSize.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setListSizes } from "../../store/reducer";
-import { getList } from "../../functions/functions";
+import { setSizeId } from "../../store/reducer";
 
 function ChooseSize(props) {
-	const { listSizes } = useSelector(state => state);
+	const [sizes, setSizes] = useState([]);
+
+	const sizeId = useSelector(state => state.order.sizeId);
+
 	const dispatch = useDispatch();
-	const url = "http://${process.env.REACT_APP_HOST}/api/Sizes";
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListSizes(list)));
-	}, [dispatch]);
+		(async () => {
+			const response = await fetch(
+				`http://${process.env.REACT_APP_HOST}/api/sizes`,
+				{
+					method: "GET",
+					credentials: "include",
+				}
+			);
+			const sizes = await response.json();
+
+			setSizes(sizes);
+		})();
+	}, []);
 
 	return (
 		<div>
 			<div className="caption-tablo">Выберите размер:</div>
 			<div className="tablo-order-choose">
-				{listSizes.map(({ value }) => (
-					<button className="block-size">{value}</button>
+				{sizes.map(({ id, name, value }) => (
+					<div
+						key={id}
+						className={`block-size ${
+							sizeId === id ? "selected" : ""
+						}`}
+						title={name}
+						onClick={() => {
+							dispatch(setSizeId(id));
+						}}
+					>
+						{value}
+					</div>
 				))}
 			</div>
 		</div>
