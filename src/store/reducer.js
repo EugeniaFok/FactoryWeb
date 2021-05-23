@@ -1,5 +1,12 @@
 const initState = {
 	role: "",
+	order: {
+		print: {
+			width: 50,
+			height: 50,
+			base64: "",
+		},
+	},
 	listOrders: [],
 	listUsers: [],
 	listColors: [],
@@ -37,6 +44,15 @@ export const setListSizes = listSizes => ({
 	type: "SET_LIST_SIZES",
 	listSizes,
 });
+export const setPrintSize = size => ({
+	type: "SET_PRINT_SIZE",
+	size,
+});
+export const setPrintContent = base64 => ({
+	type: "SET_PRINT_CONTENT",
+	base64,
+});
+// ACTIONS
 
 export const reducer = (state = initState, action) => {
 	switch (action.type) {
@@ -54,6 +70,26 @@ export const reducer = (state = initState, action) => {
 			return { ...state, listPrints: action.listPrints };
 		case "SET_LIST_SIZES":
 			return { ...state, listSizes: action.listSizes };
+		case "SET_PRINT_CONTENT":
+			return {
+				...state,
+				order: {
+					...state.order,
+					print: { ...state.order.print, base64: action.base64 },
+				},
+			};
+		case "SET_PRINT_SIZE":
+			return {
+				...state,
+				order: {
+					...state.order,
+					print: {
+						...state.order.print,
+						width: action.size.width,
+						height: action.size.height,
+					},
+				},
+			};
 		default:
 			return state;
 	}

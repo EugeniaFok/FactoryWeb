@@ -1,23 +1,44 @@
 .container {
     display: flex;
-    width: 400px;
-    height: 400px;
     position: relative;
+    padding: 10px;
 }
 
-.model {
+.maker_wrapper {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    padding: 10px;
+    align-items: center;
+}
+
+/* Model */
+
+.maker_wrapper__model {
+    width: 400px;
+    height: 400px;
     background-image: url(./contents/model.png);
     background-size: contain;
     background-repeat: no-repeat;
 }
 
+/* Description */
+
+.maker_wrapper__description {
+    width: 100%;
+    color: #ccc;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 10px;
+}
+
 .workspace {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 100px;
-    left: 148px;
+    width: 125px;
+    height: 125px;
+    top: 110px;
+    left: 160px;
     border: 1px dashed transparent;
 }
 
@@ -27,6 +48,10 @@
 
 .print {
     position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .print > img {

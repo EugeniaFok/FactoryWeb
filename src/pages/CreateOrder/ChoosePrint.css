@@ -13,3 +13,57 @@ img.block-print:focus {
     border: 2px solid black; 
     box-shadow: 1px 1px 1px grey;
 }
+
+/* Chooser */
+
+.chooser-workspace {
+    display: flex;
+    justify-content: space-between;
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Maker */
+
+.maker_container {
+    width: 450px;
+}
+
+/* Prints */
+
+.prints_container {
+    display: flex;
+    width: 300px;
+    height: 500px;
+}
+
+.print-list {
+    width: 100%;
+    position: relative;
+}
+
+.print-list > .list-body {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 40px;
+}
+
+.list-body > .list-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: background ease-in-out 150ms;
+}
+
+.print-img {
+    width: 120px;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
