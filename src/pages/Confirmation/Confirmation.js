@@ -76,13 +76,15 @@ function Confirmation(props) {
 					<input type="text" placeholder="Найти" />
 					<button onClick />
 				</div>
-				{listOrders.map(({ Id, clientName, state }) => (
-					<OrderRowConfirm
-						Id={Id}
-						FullName={clientName}
-						Status={state}
-					/>
-				))}
+				<div className="orders_list">
+					{listOrders.map(({ Id, clientName, state }) => (
+						<OrderRowConfirm
+							Id={Id}
+							FullName={clientName}
+							Status={state}
+						/>
+					))}
+				</div>
 			</div>
 		</div>
 	);
@@ -91,16 +93,16 @@ function Confirmation(props) {
 function OrderRowConfirm(props) {
 	return (
 		<div className="row_table">
-			<div className="">
-				<div className="">{props.Id}</div>
-				<div className="">{props.FullName}</div>
-				<div className="">{props.Status}</div>
+			<div className="order_item">
+				<div>{props.FullName}</div>
 			</div>
-			<div className="confirm" onClick={setConfirmOrder}>
-				Подтвердить
-			</div>
-			<div className="delete" onClick={setCancelOrder}>
-				Отменить
+			<div class="controls">
+				<div className="btn confirm" onClick={setConfirmOrder}>
+					Подтвердить
+				</div>
+				<div className="btn delete" onClick={setCancelOrder}>
+					Отменить
+				</div>
 			</div>
 		</div>
 	);

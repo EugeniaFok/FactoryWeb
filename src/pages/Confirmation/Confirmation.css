@@ -1,3 +1,12 @@
 .confirm{
     background: green;
 }
+
+.orders_list > * + * {
+    margin-top: 10px;
+}
+
+.order_item {
+    display: flex;
+    align-items: center;
+}

@@ -14,7 +14,7 @@ import ModalConfirm from "../../components/Modal";
 import CreateItem from "../../components/CreateItem";
 
 function Models() {
-	const { listModels } = useSelector(state => state);
+	const { models } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = `http://${process.env.REACT_APP_HOST}/api/Models/`;
 	const [isOpen, setIsOpen] = useState(false);
@@ -58,9 +58,7 @@ function Models() {
 						setIsOpenCreate(false);
 						createItem(url, newModel, id => {
 							newModel.id = id;
-							dispatch(
-								setModels(addListItem(listModels, newModel))
-							);
+							dispatch(setModels(addListItem(models, newModel)));
 						});
 					}}
 					onSetCancel={() => {
@@ -82,18 +80,19 @@ function Models() {
 					<input type="text" placeholder="Найти" />
 					<button onClick />
 				</div>
-				{listModels.map(({ id, name, color }) => (
-					<OrderRowModels
-						Id={id}
-						Name={name}
-						// Color={color}
-						onClick={() => {
-							setIsOpen(true);
-							setName(name);
-							setId(id);
-						}}
-					/>
-				))}
+				<div className="models_list">
+					{models.map(({ id, name, color }) => (
+						<OrderRowModels
+							Id={id}
+							Name={name}
+							onClick={() => {
+								setIsOpen(true);
+								setName(name);
+								setId(id);
+							}}
+						/>
+					))}
+				</div>
 			</div>
 			<ModalConfirm
 				isOpened={isOpen}
@@ -101,9 +100,7 @@ function Models() {
 				onSetOk={() => {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
-						dispatch(
-							setModels(deleteListItemId(listModels, curId))
-						);
+						dispatch(setModels(deleteListItemId(models, curId)));
 					});
 				}}
 				onSetCancel={() => {
@@ -157,12 +154,14 @@ function CreateNewModels(props) {
 function OrderRowModels(props) {
 	return (
 		<div className="row_table">
-			<div className="">
-				<div className="">{props.Name}</div>
-				<div className="">{props.Color}</div>
+			<div className="model_item">
+				<div>{props.Name}</div>
+				<div>{props.Color}</div>
 			</div>
-			<div className="factory-btn-delete" onClick={props.onClick}>
-				Удалить
+			<div className="controls">
+				<div className="btn delete" onClick={props.onClick}>
+					Удалить
+				</div>
 			</div>
 		</div>
 	);

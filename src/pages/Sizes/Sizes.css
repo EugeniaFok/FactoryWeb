@@ -1,7 +1,12 @@
-.confirm{
-    background: green;
+.size_item {
+    display: flex;
+    align-items: center;
 }
 
-.delete{
-    background: red;
+.size_item > * + * {
+    margin-left: 10px;
+}
+
+.sizes_list > * + * {
+    margin-top: 10px;
 }

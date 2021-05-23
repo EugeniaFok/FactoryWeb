@@ -16,7 +16,7 @@ import CreateItem from "../../components/CreateItem";
 const types = ["jpg", "svg", "png"];
 
 function Prints(props) {
-	const { listPrints } = useSelector(state => state);
+	const { prints } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = `http://${process.env.REACT_APP_HOST}/api/Images/`;
 	const [isOpen, setIsOpen] = useState(false);
@@ -70,9 +70,7 @@ function Prints(props) {
 						setIsOpenCreate(false);
 						createItem(url, newPrint, id => {
 							newPrint.id = id;
-							dispatch(
-								setPrints(addListItem(listPrints, newPrint))
-							);
+							dispatch(setPrints(addListItem(prints, newPrint)));
 						});
 					}}
 					onSetCancel={() => {
@@ -104,21 +102,23 @@ function Prints(props) {
 					<input type="search" placeholder="Найти" />
 					<button onClick />
 				</div>
-				{listPrints.map(({ id, name, state }) => (
-					<OrderRowPrints
-						Id={id}
-						Name={name}
-						State={state}
-						select={() => {
-							alert(`You select print ${name}`);
-						}}
-						remove={() => {
-							setIsOpen(true);
-							setName(name);
-							setId(id);
-						}}
-					/>
-				))}
+				<div className="prints_list">
+					{prints.map(({ id, name, state }) => (
+						<OrderRowPrints
+							Id={id}
+							Name={name}
+							State={state}
+							select={() => {
+								alert(`You select print ${name}`);
+							}}
+							remove={() => {
+								setIsOpen(true);
+								setName(name);
+								setId(id);
+							}}
+						/>
+					))}
+				</div>
 			</div>
 			<ModalConfirm
 				isOpened={isOpen}
@@ -126,9 +126,7 @@ function Prints(props) {
 				onSetOk={() => {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
-						dispatch(
-							setPrints(deleteListItemId(listPrints, curId))
-						);
+						dispatch(setPrints(deleteListItemId(prints, curId)));
 					});
 				}}
 				onSetCancel={() => {
@@ -205,13 +203,14 @@ function CreateNewPrint(props) {
 function OrderRowPrints(props) {
 	return (
 		<div className="row_table">
-			<div className="wrapper" onClick={props.select}>
-				<div className="">{props.Id}</div>
-				<div className="">{props.Name}</div>
-				<div className="">{props.State}</div>
+			<div className="print_item" onClick={props.select}>
+				<div>{props.Id}</div>
+				<div>{props.Name}</div>
 			</div>
-			<div className="factory-btn-delete" onClick={props.remove}>
-				Удалить
+			<div className="controls">
+				<div className="btn delete" onClick={props.remove}>
+					Удалить
+				</div>
 			</div>
 		</div>
 	);

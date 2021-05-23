@@ -14,7 +14,7 @@ import ModalConfirm from "../../components/Modal";
 import CreateItem from "../../components/CreateItem";
 
 function Colors() {
-	const { listColors } = useSelector(state => state);
+	const { colors } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
 	const [isOpenModal, setIsOpen] = useState(false);
@@ -57,9 +57,7 @@ function Colors() {
 						setIsOpenCreate(false);
 						createItem(url, newColor, id => {
 							newColor.id = id;
-							dispatch(
-								setColors(addListItem(listColors, newColor))
-							);
+							dispatch(setColors(addListItem(colors, newColor)));
 						});
 					}}
 					onSetCancel={() => {
@@ -81,18 +79,20 @@ function Colors() {
 					<input type="search" placeholder="Найти" />
 					<button onClick />
 				</div>
-				{listColors.map(({ id, name, value }) => (
-					<OrderRowColors
-						Id={id}
-						Name={name}
-						Value={value}
-						onClick={() => {
-							setIsOpen(true);
-							setName(name);
-							setId(id);
-						}}
-					/>
-				))}
+				<div className="colors_list">
+					{colors.map(({ id, name, value }) => (
+						<OrderRowColors
+							Id={id}
+							Name={name}
+							Value={value}
+							onClick={() => {
+								setIsOpen(true);
+								setName(name);
+								setId(id);
+							}}
+						/>
+					))}
+				</div>
 			</div>
 			<ModalConfirm
 				isOpened={isOpenModal}
@@ -100,9 +100,7 @@ function Colors() {
 				onSetOk={() => {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
-						dispatch(
-							setColors(deleteListItemId(listColors, curId))
-						);
+						dispatch(setColors(deleteListItemId(colors, curId)));
 					});
 				}}
 				onSetCancel={() => {
@@ -141,13 +139,15 @@ function CreateNewColors(props) {
 function OrderRowColors(props) {
 	return (
 		<div className="row_table">
-			<div className="">
-				<div className="">{props.Id}</div>
-				<div className="">{props.Name}</div>
-				<div className="">{props.Value}</div>
+			<div className="color_item">
+				<div>{props.Id}</div>
+				<div>{props.Name}</div>
+				<div>{props.Value}</div>
 			</div>
-			<div className="factory-btn-delete" onClick={props.onClick}>
-				Удалить
+			<div className="controls">
+				<div className="btn delete" onClick={props.onClick}>
+					Удалить
+				</div>
 			</div>
 		</div>
 	);

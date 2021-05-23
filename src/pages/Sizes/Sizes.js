@@ -15,7 +15,7 @@ import ModalConfirm from "../../components/Modal";
 import CreateItem from "../../components/CreateItem";
 
 function Sizes(props) {
-	const { listSizes } = useSelector(state => state);
+	const { sizes } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = `http://${process.env.REACT_APP_HOST}/api/Sizes/`;
 	const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +58,7 @@ function Sizes(props) {
 						setIsOpenCreate(false);
 						createItem(url, newSize, id => {
 							newSize.id = id;
-							dispatch(setSizes(addListItem(listSizes, newSize)));
+							dispatch(setSizes(addListItem(sizes, newSize)));
 						});
 					}}
 					onSetCancel={() => {
@@ -84,10 +84,7 @@ function Sizes(props) {
 							if (event.target.value !== null) {
 								dispatch(
 									setSizes(
-										setFilterList(
-											listSizes,
-											event.target.value
-										)
+										setFilterList(sizes, event.target.value)
 									)
 								);
 							}
@@ -95,18 +92,20 @@ function Sizes(props) {
 					/>
 					<button onClick={() => {}} />
 				</div>
-				{listSizes.map(({ id, name, value }) => (
-					<RowTableSizes
-						Id={id}
-						Name={name}
-						Value={value}
-						onClick={() => {
-							setIsOpen(true);
-							setValue(value);
-							setId(id);
-						}}
-					/>
-				))}
+				<div className="sizes_list">
+					{sizes.map(({ id, name, value }) => (
+						<RowTableSizes
+							Id={id}
+							Name={name}
+							Value={value}
+							onClick={() => {
+								setIsOpen(true);
+								setValue(value);
+								setId(id);
+							}}
+						/>
+					))}
+				</div>
 			</div>
 			<ModalConfirm
 				isOpened={isOpen}
@@ -114,7 +113,7 @@ function Sizes(props) {
 				onSetOk={() => {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
-						dispatch(setSizes(deleteListItemId(listSizes, curId)));
+						dispatch(setSizes(deleteListItemId(sizes, curId)));
 					});
 				}}
 				onSetCancel={() => {
@@ -152,12 +151,14 @@ function CreateNewSize(props) {
 function RowTableSizes(props) {
 	return (
 		<div className="row_table">
-			<div className="">
-				<div className="">{props.Name}</div>
-				<div className="">{props.Value}</div>
+			<div className="size_item">
+				<div>{props.Name}</div>
+				<div>{props.Value}</div>
 			</div>
-			<div className="factory-btn-delete" onClick={props.onClick}>
-				Удалить
+			<div className="controls">
+				<div className="btn delete" onClick={props.onClick}>
+					Удалить
+				</div>
 			</div>
 		</div>
 	);
