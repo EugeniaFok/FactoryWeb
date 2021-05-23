@@ -10,7 +10,7 @@ import CreatePrint from "../../components/CreatePrint";
 function Prints(props) {
 	const { listPrints } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = "http://localhost:50000/api/Images/";
+	const url = `http://${process.env.REACT_APP_HOST}/api/Images/`;
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenCreate, setIsOpenCreate] = useState(false);
 	const [curName, setName] = useState(false);
@@ -18,7 +18,7 @@ function Prints(props) {
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListPrints(list)));
-	}, [dispatch]);
+	}, [dispatch, url]);
 
 	return (
 		<div className="">
