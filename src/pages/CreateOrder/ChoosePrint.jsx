@@ -42,6 +42,7 @@ function ChoosePrint(props) {
 										onClick={() => {
 											dispatch(
 												setPrintContent(
+													print.id,
 													print.contentsBase64
 												)
 											);

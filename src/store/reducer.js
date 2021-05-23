@@ -5,6 +5,7 @@ const initState = {
 		modelId: "",
 		sizeId: "",
 		print: {
+			id: "",
 			width: 50,
 			height: 50,
 			base64: "",
@@ -65,8 +66,9 @@ export const setPrintSize = size => ({
 	type: "SET_PRINT_SIZE",
 	size,
 });
-export const setPrintContent = base64 => ({
+export const setPrintContent = (id, base64) => ({
 	type: "SET_PRINT_CONTENT",
+	id,
 	base64,
 });
 // ACTIONS
@@ -116,7 +118,11 @@ export const reducer = (state = initState, action) => {
 				...state,
 				order: {
 					...state.order,
-					print: { ...state.order.print, base64: action.base64 },
+					print: {
+						...state.order.print,
+						id: action.id,
+						base64: action.base64,
+					},
 				},
 			};
 		case "SET_PRINT_SIZE":
