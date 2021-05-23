@@ -3,9 +3,11 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import "./App.css";
 import { PAGES } from "./RoutePages";
 import Menu from "./components/Menu";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Auth from "./pages/Auth/Auth";
 import { RegisteredHandler } from "./functions/functions";
+import { useDispatch, useSelector } from "react-redux";
+import { changeIsAuth } from "./store/reducer";
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
 	<Route
@@ -26,22 +28,23 @@ const AuthRoute = ({ component: Component, auth, ...rest }) => (
 );
 
 function App() {
-	const [auth, setAuth] = useState(false);
+	const { isAuth } = useSelector(state => state);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		RegisteredHandler(setAuth);
-	}, []);
+		RegisteredHandler(auth => dispatch(changeIsAuth(auth)));
+	}, [dispatch]);
 
 	return (
 		<div className="App">
 			<Menu />
 			<Switch>
-				<AuthRoute path="/auth" component={Auth} auth={auth} />
+				<AuthRoute path="/auth" component={Auth} auth={isAuth} />
 
 				{PAGES.map(({ title, href, component }) => (
 					<PrivateRoute
 						path={href}
-						auth={auth}
+						auth={isAuth}
 						component={component}
 					/>
 				))}

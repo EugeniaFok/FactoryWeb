@@ -1,5 +1,6 @@
 const initState = {
 	role: "",
+	isAuth: false,
 	listOrders: [],
 	listUsers: [],
 	listColors: [],
@@ -12,6 +13,10 @@ const initState = {
 export const changeRole = role => ({
 	type: "CHANGE_ROLE",
 	role,
+});
+export const changeIsAuth = isAuth => ({
+	type: "SET_AUTH",
+	isAuth,
 });
 export const setListOrders = listOrders => ({
 	type: "SET_LIST_ORDERS",
@@ -42,6 +47,8 @@ export const reducer = (state = initState, action) => {
 	switch (action.type) {
 		case "CHANGE_ROLE":
 			return { ...state, role: action.role };
+		case "SET_AUTH":
+			return { ...state, isAuth: action.isAuth };
 		case "SET_LIST_ORDERS":
 			return { ...state, listOrders: action.listOrders };
 		case "SET_LIST_USERS":

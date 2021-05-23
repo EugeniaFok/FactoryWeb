@@ -106,6 +106,40 @@ export const createUser = (url, body, callback) => {
 	});
 };
 
+export const logout = callback => {
+	const headers = new Headers();
+	headers.append("Content-Type", "application/json");
+	headers.append("Accept", "*/*");
+
+	fetch(`http://${process.env.REACT_APP_HOST}/api/Account/logout`, {
+		method: "POST",
+		headers,
+		redirect: "follow",
+		credentials: "include",
+	}).then(response => {
+		if (response.status === 204) {
+			callback(true);
+		}
+	});
+};
+
+export const changePassword = (body, callback) => {
+	const headers = new Headers();
+	headers.append("Content-Type", "application/json");
+	headers.append("Accept", "*/*");
+
+	fetch(`http://${process.env.REACT_APP_HOST}/api/Account/changePassword`, {
+		method: "POST",
+		headers,
+		body: JSON.stringify(body),
+		redirect: "follow",
+		credentials: "include",
+	}).then(response => {
+		if (response.status === 204) {
+			callback(true);
+		}
+	});
+};
 export function addListItem(listItem, newItem) {
 	listItem.push(newItem);
 	return listItem;
