@@ -94,6 +94,9 @@ function Menu() {
 						}
 					});
 				}}
+				onSetСancel={() => {
+					setIsOpenAuth(false);
+				}}
 			/>
 			<CreateItem
 				isOpened={isOpenChangePassword}
