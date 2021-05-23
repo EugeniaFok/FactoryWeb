@@ -74,27 +74,6 @@ export const PAGES = [
 		icon: IconSizes,
 		role: ["Administrator"],
 	},
-	{
-		title: "Заказ на выполнение ",
-		href: "/task",
-		component: Prints,
-		icon: IconHome,
-		role: ["Administrator"],
-	},
-	{
-		title: "Модели",
-		href: "/models",
-		component: Models,
-		icon: IconModels,
-		role: ["Administrator"],
-	},
-	{
-		title: "Размеры",
-		href: "/sizes",
-		component: Sizes,
-		icon: IconSizes,
-		role: ["Administrator"],
-	},
 ];
 export const INFO_AUTH = {
 	title: "Авторизация",

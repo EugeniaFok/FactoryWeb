@@ -112,13 +112,13 @@ function Models() {
 }
 
 function CreateNewModels(props) {
-	const { listColors } = useSelector(state => state);
+	const { colors } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
 
 	useEffect(() => {
 		getList(url, list => dispatch(setColors(list)));
-	}, [dispatch]);
+	}, [dispatch, url]);
 
 	return (
 		<div>
@@ -142,7 +142,7 @@ function CreateNewModels(props) {
 					onChange={event => props.onSetColorId(event.target.value)}
 				>
 					<option>Не выбрано</option>
-					{listColors.map(element => (
+					{colors.map(element => (
 						<option value={element.id}>{element.name}</option>
 					))}
 				</select>
