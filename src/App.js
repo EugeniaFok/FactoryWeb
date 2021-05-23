@@ -34,9 +34,10 @@ function App() {
 
 	useEffect(() => {
 		RegisteredHandler(role => {
-			let isAuth = role !== null ? true : false;
+			let isAuth = !!role;
+
 			dispatch(changeIsAuth(isAuth));
-			dispatch(changeRole("role"));
+			dispatch(changeRole(role));
 		});
 	}, [dispatch]);
 

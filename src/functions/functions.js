@@ -11,15 +11,11 @@ export const RegisteredHandler = callback => {
 	})
 		.then(response => {
 			if (response.status === 200) {
-				return response.json();
+				return response.text();
 			}
 		})
 		.then(data => {
-			if (data === undefined) {
-				callback(null);
-			} else {
-				callback(data);
-			}
+			callback(data);
 		});
 };
 export const getList = (url, callback) => {
