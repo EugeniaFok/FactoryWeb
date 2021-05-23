@@ -32,7 +32,7 @@ function App() {
 			let isAuth = !!role;
 
 			dispatch(changeIsAuth(isAuth));
-			dispatch(changeRole(role));
+			dispatch(changeRole(role ?? "Client"));
 		});
 	}, [dispatch]);
 

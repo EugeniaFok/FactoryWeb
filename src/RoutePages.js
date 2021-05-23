@@ -23,7 +23,7 @@ export const PAGES = [
 		href: "/home",
 		component: Tablo,
 		icon: IconHome,
-		role: ["Client", "Board", "Administrator"],
+		role: ["Board", "Administrator"],
 	},
 	{
 		title: "Создание заказа",
