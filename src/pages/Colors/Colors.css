@@ -1,0 +1,12 @@
+.colors_list > * + * {
+    margin-top: 10px;
+}
+
+.color_item {
+    display: flex;
+    align-items: center;
+}
+
+.color_item > * + * {
+    margin-left: 10px;
+}

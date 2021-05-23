@@ -1,37 +1,68 @@
 import "./Maker.css";
 import { Rnd } from "react-rnd";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPrintSize } from "../../../store/reducer";
 
-const a = `data:image/png;base64,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`;
+export const Maker = props => {
+	const {
+		color,
+		model,
+		size,
+		print: { width, height, base64 },
+	} = useSelector(state => {
+		const { colorId, modelId, sizeId, print } = state.order;
+		const { colors, models, sizes } = state;
 
-export const Maker = () => {
-	const [size, setSize] = useState({ width: 50, height: 50 });
+		return {
+			color: colors.find(color => color.id === colorId),
+			model: models.find(model => model.id === modelId),
+			size: sizes.find(size => size.id === sizeId),
+			print,
+		};
+	});
+	// const { width, height, base64 } = useSelector();
+
+	const dispatch = useDispatch();
 
 	return (
 		<div className="container">
-			<div className="model" />
-			<div className="workspace">
-				<Rnd
-					bounds="parent"
-					lockAspectRatio
-					onResize={(e, direction, ref, delta, position) => {
-						setSize({
-							width: ref.style.width,
-							height: ref.style.height,
-						});
-					}}
-				>
-					<div
-						className="print"
-						style={{
-							width: size.width,
-							height: size.height,
-							backgroundImage: `url(${a})`,
-							backgroundSize: "contain",
-							backgroundRepeat: "no-repeat",
-						}}
-					></div>
-				</Rnd>
+			<div className="maker_wrapper">
+				<div className="maker_wrapper__model">
+					{base64 ? (
+						<div className="workspace">
+							<Rnd
+								bounds="parent"
+								lockAspectRatio
+								onResize={(
+									e,
+									direction,
+									ref,
+									delta,
+									position
+								) => {
+									dispatch(
+										setPrintSize({
+											width: ref.style.width,
+											height: ref.style.height,
+										})
+									);
+								}}
+							>
+								<div
+									className="print"
+									style={{
+										width,
+										height,
+										backgroundImage: `url(data:image/png;base64,${base64})`,
+									}}
+								></div>
+							</Rnd>
+						</div>
+					) : null}
+				</div>
+				<div className="maker_wrapper__description">
+					{`Цвет: ${color.name}, Модель: ${model?.name}, Размер: ${size?.value}`}
+				</div>
 			</div>
 		</div>
 	);

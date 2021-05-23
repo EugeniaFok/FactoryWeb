@@ -1,12 +1,23 @@
 const initState = {
 	role: "Client",
 	isAuth: false,
+	order: {
+		colorId: "",
+		modelId: "",
+		sizeId: "",
+		print: {
+			id: "",
+			width: 50,
+			height: 50,
+			base64: "",
+		},
+	},
 	listOrders: [],
 	listUsers: [],
-	listColors: [],
-	listModels: [],
-	listPrints: [],
-	listSizes: [],
+	colors: [],
+	models: [],
+	prints: [],
+	sizes: [],
 };
 
 // ACTIONS
@@ -26,22 +37,46 @@ export const setListUsers = listUsers => ({
 	type: "SET_LIST_USERS",
 	listUsers,
 });
-export const setListColors = listColors => ({
-	type: "SET_LIST_COLORS",
-	listColors,
+
+export const setColors = colors => ({
+	type: "SET_COLORS",
+	colors,
 });
-export const setListModels = listModels => ({
-	type: "SET_LIST_MODELS",
-	listModels,
+export const setModels = models => ({
+	type: "SET_MODELS",
+	models,
 });
-export const setListPrints = listPrints => ({
-	type: "SET_LIST_PRINTS",
-	listPrints,
+export const setPrints = prints => ({
+	type: "SET_PRINTS",
+	prints,
 });
-export const setListSizes = listSizes => ({
-	type: "SET_LIST_SIZES",
-	listSizes,
+export const setSizes = sizes => ({
+	type: "SET_SIZES",
+	sizes,
 });
+
+export const setColorId = colorId => ({
+	type: "SET_COLOR_ID",
+	colorId,
+});
+export const setModelId = modelId => ({
+	type: "SET_MODEL_ID",
+	modelId,
+});
+export const setSizeId = sizeId => ({
+	type: "SET_SIZE_ID",
+	sizeId,
+});
+export const setPrintSize = size => ({
+	type: "SET_PRINT_SIZE",
+	size,
+});
+export const setPrintContent = (id, base64) => ({
+	type: "SET_PRINT_CONTENT",
+	id,
+	base64,
+});
+// ACTIONS
 
 export const reducer = (state = initState, action) => {
 	switch (action.type) {
@@ -53,14 +88,62 @@ export const reducer = (state = initState, action) => {
 			return { ...state, listOrders: action.listOrders };
 		case "SET_LIST_USERS":
 			return { ...state, listUsers: action.listUsers };
-		case "SET_LIST_COLORS":
-			return { ...state, listColors: action.listColors };
-		case "SET_LIST_MODELS":
-			return { ...state, listModels: action.listModels };
-		case "SET_LIST_PRINTS":
-			return { ...state, listPrints: action.listPrints };
-		case "SET_LIST_SIZES":
-			return { ...state, listSizes: action.listSizes };
+		case "SET_COLORS":
+			return { ...state, colors: action.colors };
+		case "SET_MODELS":
+			return { ...state, models: action.models };
+		case "SET_PRINTS":
+			return { ...state, prints: action.prints };
+		case "SET_SIZES":
+			return { ...state, sizes: action.sizes };
+		case "SET_COLOR_ID":
+			return {
+				...state,
+				order: {
+					...state.order,
+					colorId: action.colorId,
+				},
+			};
+		case "SET_MODEL_ID":
+			return {
+				...state,
+				order: {
+					...state.order,
+					modelId: action.modelId,
+				},
+			};
+		case "SET_SIZE_ID":
+			return {
+				...state,
+				order: {
+					...state.order,
+					sizeId: action.sizeId,
+				},
+			};
+		case "SET_PRINT_CONTENT":
+			return {
+				...state,
+				order: {
+					...state.order,
+					print: {
+						...state.order.print,
+						id: action.id,
+						base64: action.base64,
+					},
+				},
+			};
+		case "SET_PRINT_SIZE":
+			return {
+				...state,
+				order: {
+					...state.order,
+					print: {
+						...state.order.print,
+						width: action.size.width,
+						height: action.size.height,
+					},
+				},
+			};
 		default:
 			return state;
 	}

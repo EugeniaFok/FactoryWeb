@@ -1,7 +1,7 @@
 import "./Models.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setListModels, setListColors } from "../../store/reducer";
+import { setModels, setColors } from "../../store/reducer";
 import { useEffect, useState } from "react";
 import {
 	getList,
@@ -14,7 +14,7 @@ import ModalConfirm from "../../components/Modal";
 import CreateItem from "../../components/CreateItem";
 
 function Models() {
-	const { listModels } = useSelector(state => state);
+	const { models } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = `http://${process.env.REACT_APP_HOST}/api/Models/`;
 	const [isOpen, setIsOpen] = useState(false);
@@ -27,8 +27,8 @@ function Models() {
 	let newModel = { name: newName, colorId: newColorId, id: "" };
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListModels(list)));
-	}, [dispatch]);
+		getList(url, list => dispatch(setModels(list)));
+	}, [dispatch, url]);
 
 	return (
 		<div className="">
@@ -40,7 +40,7 @@ function Models() {
 						src={IconRefresh}
 						alt="..."
 						onClick={() =>
-							getList(url, list => dispatch(setListModels(list)))
+							getList(url, list => dispatch(setModels(list)))
 						}
 					/>
 					<button
@@ -58,9 +58,7 @@ function Models() {
 						setIsOpenCreate(false);
 						createItem(url, newModel, id => {
 							newModel.id = id;
-							dispatch(
-								setListModels(addListItem(listModels, newModel))
-							);
+							dispatch(setModels(addListItem(models, newModel)));
 						});
 					}}
 					onSetCancel={() => {
@@ -82,18 +80,19 @@ function Models() {
 					<input type="text" placeholder="Найти" />
 					<button onClick />
 				</div>
-				{listModels.map(({ id, name, color }) => (
-					<OrderRowModels
-						Id={id}
-						Name={name}
-						// Color={color}
-						onClick={() => {
-							setIsOpen(true);
-							setName(name);
-							setId(id);
-						}}
-					/>
-				))}
+				<div className="models_list">
+					{models.map(({ id, name, color }) => (
+						<OrderRowModels
+							Id={id}
+							Name={name}
+							onClick={() => {
+								setIsOpen(true);
+								setName(name);
+								setId(id);
+							}}
+						/>
+					))}
+				</div>
 			</div>
 			<ModalConfirm
 				isOpened={isOpen}
@@ -101,9 +100,7 @@ function Models() {
 				onSetOk={() => {
 					setIsOpen(false);
 					deleteItem(url + curId, () => {
-						dispatch(
-							setListModels(deleteListItemId(listModels, curId))
-						);
+						dispatch(setModels(deleteListItemId(models, curId)));
 					});
 				}}
 				onSetCancel={() => {
@@ -120,7 +117,7 @@ function CreateNewModels(props) {
 	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListColors(list)));
+		getList(url, list => dispatch(setColors(list)));
 	}, [dispatch]);
 
 	return (
@@ -157,12 +154,14 @@ function CreateNewModels(props) {
 function OrderRowModels(props) {
 	return (
 		<div className="row_table">
-			<div className="">
-				<div className="">{props.Name}</div>
-				<div className="">{props.Color}</div>
+			<div className="model_item">
+				<div>{props.Name}</div>
+				<div>{props.Color}</div>
 			</div>
-			<div className="factory-btn-delete" onClick={props.onClick}>
-				Удалить
+			<div className="controls">
+				<div className="btn delete" onClick={props.onClick}>
+					Удалить
+				</div>
 			</div>
 		</div>
 	);

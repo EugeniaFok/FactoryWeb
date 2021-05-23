@@ -1,0 +1,12 @@
+.print_item {
+    display: flex;
+    align-items: center;
+}
+
+.print_item > * + * {
+    margin-left: 10px;
+}
+
+.prints_list > * + * {
+    margin-top: 10px;
+}

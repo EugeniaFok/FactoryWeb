@@ -35,7 +35,7 @@ function Users() {
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListUsers(list)));
-	}, [dispatch]);
+	}, [dispatch, url]);
 
 	return (
 		<div className="">
@@ -176,12 +176,14 @@ function CreateNewUser(props) {
 function RowTableUsers(props) {
 	return (
 		<div className="row_table">
-			<div className="">
-				<div className="">{props.Login}</div>
-				<div className="">{props.Role}</div>
+			<div className="user_item">
+				<div className="user_item__login">{props.Login}</div>
+				<div className="user_item__role">{props.Role}</div>
 			</div>
-			<div className="factory-btn-delete" onClick={props.onClick}>
-				Удалить
+			<div className="controls">
+				<div className="btn delete" onClick={props.onClick}>
+					Удалить
+				</div>
 			</div>
 		</div>
 	);

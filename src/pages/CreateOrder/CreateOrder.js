@@ -5,6 +5,7 @@ import ChooseSize from "./ChooseSize";
 import ChoosePrint from "./ChoosePrint";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function CreateOrder() {
 	const phases = ["color", "model", "size", "print", "creat"];
@@ -54,14 +55,16 @@ function CreateOrder() {
 	);
 }
 
-// "modelId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-// "sizeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-// "side": 0,
-// "imageId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-// "top": 0,
-// "left": 0,
-// "clientName": "string",
-// "clientPhone": "string"
+// {
+// 	"modelId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+// 	"sizeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+// 	"side": 0,
+// 	"imageId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+// 	"top": 0,
+// 	"left": 0,
+// 	"clientName": "string",
+// 	"clientPhone": "string"
+// }
 const createOrderHandler =
 	(model, size, image, x, y, fullName, phone, callback) => () => {
 		const headers = new Headers();
@@ -72,7 +75,7 @@ const createOrderHandler =
 			sizeId: size,
 			imageId: image,
 			top: x,
-			left: y, // AAAaaa!2345
+			left: y,
 			clientName: fullName,
 			clientPhone: phone,
 		});
@@ -92,7 +95,16 @@ const createOrderHandler =
 
 function CreationPanel() {
 	const history = useHistory();
-	let modelId, sizeId, imageId, top, left;
+	let top, left;
+	const { modelId, sizeId, printId } = useSelector(state => {
+		const {
+			modelId,
+			sizeId,
+			print: { id: printId },
+		} = state.order;
+
+		return { modelId, sizeId, printId };
+	});
 	const [clientName, setClientName] = useState("");
 	const [clientPhone, setClientPhone] = useState("");
 
@@ -133,9 +145,9 @@ function CreationPanel() {
 						onClick={createOrderHandler(
 							modelId,
 							sizeId,
-							imageId,
-							top,
-							left,
+							printId,
+							0,
+							0,
 							clientName,
 							clientPhone,
 							redirectTablo

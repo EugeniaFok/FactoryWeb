@@ -1,7 +1,8 @@
-.confirm{
-    background: green;
+.model_item {
+    display: flex;
+    align-items: center;
 }
 
-.delete{
-    background: red;
+.models_list > * + * {
+    margin-top: 10px;
 }

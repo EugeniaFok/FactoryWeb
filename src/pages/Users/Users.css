@@ -1,0 +1,8 @@
+.user_item {
+    display: flex;
+    align-items: center;
+}
+
+.user_item > * + * {
+    margin-left: 10px;
+}

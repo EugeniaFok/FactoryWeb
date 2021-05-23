@@ -82,3 +82,34 @@ code {
 .factory-btn-create:hover{
 	background:  rgb(93, 151, 93);
 }
+
+/* Controls */
+
+.controls {
+    display: flex;
+}
+
+.controls > * + * {
+    margin-left: 10px;
+}
+
+.controls > .btn {
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.controls > .btn.confirm {
+    background-color: rgb(60, 180, 120);
+}
+
+.controls > .btn.delete {
+    background-color: rgb(250, 69, 62);
+}
+
+.user_control__delete:active {
+    box-shadow: inset 1px 1px 4px 2px rgba(0, 0, 0, 0.082);
+}

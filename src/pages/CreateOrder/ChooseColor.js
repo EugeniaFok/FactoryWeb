@@ -1,33 +1,49 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setListColors } from "../../store/reducer";
+import { setColorId, setColors } from "../../store/reducer";
 import "./ChooseColor.css";
-import { getList } from "../../functions/functions";
 
 function ChooseColor(props) {
-	const { listColors } = useSelector(state => state);
+	const { colorId, colors } = useSelector(state => {
+		const { colorId } = state.order;
+		const { colors } = state;
+
+		return { colors, colorId };
+	});
+
 	const dispatch = useDispatch();
-	const url = "http://${process.env.REACT_APP_HOST}/api/Colors";
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListColors(list)));
+		(async () => {
+			const response = await fetch(
+				`http://${process.env.REACT_APP_HOST}/api/colors`,
+				{
+					method: "GET",
+					credentials: "include",
+				}
+			);
+			const colors = await response.json();
+
+			dispatch(setColors(colors));
+		})();
 	}, [dispatch]);
 
-	// "id": "78a296ea-26af-4a67-929c-22e5b64a28bf",
-	// "name": "Белый",
-	// "value": "#FFFFFF"
 	return (
 		<div>
 			<div className="caption-tablo">Выберите цвет изделия:</div>
 			<div className="tablo-order-choose">
-				{listColors.map(({ id, name, value }) => (
-					<div className="block-color">
-						<button
-							className="item-color"
-							style={{ backgroundColor: { value } }}
-						/>
-						<div className="name-color">{name}</div>
-					</div>
+				{colors.map(({ id, name, value }) => (
+					<div
+						key={id}
+						className={`block-color ${
+							colorId === id ? "selected" : ""
+						}`}
+						style={{ backgroundColor: value }}
+						title={name}
+						onClick={() => {
+							dispatch(setColorId(id));
+						}}
+					></div>
 				))}
 			</div>
 		</div>
