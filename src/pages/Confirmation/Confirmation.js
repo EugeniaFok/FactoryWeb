@@ -2,56 +2,19 @@ import "./Confirmation.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setListOrders } from "../../store/reducer";
-import { useEffect } from "react";
-import { getList } from "../../functions/functions";
+import { useEffect, useState } from "react";
+import {
+	getList,
+	setOrderStatus,
+	changeOrderStatus,
+	setStateOrder,
+} from "../../functions/functions";
 
-const setConfirmOrder = callback => {
-	const url = "http://${process.env.REACT_APP_HOST}/api/Orders/{id}/confirm";
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	headers.append("Accept", "*/*");
-
-	fetch(url, {
-		method: "POST",
-		headers,
-		redirect: "follow",
-		credentials: "include",
-	})
-		.then(response => {
-			if (response.status === 200) {
-				return response.json();
-			}
-		})
-		.then(data => {
-			callback(data);
-		});
-};
-
-const setCancelOrder = callback => {
-	const url = "http://${process.env.REACT_APP_HOST}/api/Orders/{id}/cancel";
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	headers.append("Accept", "*/*");
-
-	fetch(url, {
-		method: "POST",
-		headers,
-		redirect: "follow",
-		credentials: "include",
-	})
-		.then(response => {
-			if (response.status === 200) {
-				return response.json();
-			}
-		})
-		.then(data => {
-			callback(data);
-		});
-};
 function Confirmation(props) {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = `http://${process.env.REACT_APP_HOST}/api/Orders`;
+	const [curId, setId] = useState(false);
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListOrders(list)));
@@ -77,11 +40,41 @@ function Confirmation(props) {
 					<button onClick />
 				</div>
 				<div className="orders_list">
-					{listOrders.map(({ Id, clientName, state }) => (
+					{listOrders.map(element => (
 						<OrderRowConfirm
-							Id={Id}
-							FullName={clientName}
-							Status={state}
+							Id={element.id}
+							FullName={element.clientName}
+							Status={element.state}
+							onSetConfirmOrder={() => {
+								setId(element.id);
+								setOrderStatus(curId, "confirm", () => {
+									dispatch(setStateOrder(element, 1));
+								});
+							}}
+							onSetIssureOrder={() => {
+								setId(element.id);
+								setOrderStatus(curId, "issue", () => {
+									dispatch(setStateOrder(element, 3));
+								});
+							}}
+							onSetCancelOrder={() => {
+								setId(element.id);
+								setOrderStatus(curId, "cancel", () => {
+									dispatch(setStateOrder(element, 200));
+								});
+							}}
+							onSetCompleteOrder={() => {
+								setId(element.id);
+								setOrderStatus(curId, "completeTask", () => {
+									dispatch(setStateOrder(element, 100));
+								});
+							}}
+							onSetChangeStatusOrder={status => {
+								setId(element.id);
+								changeOrderStatus(curId, status, () => {
+									dispatch(setStateOrder(element, status));
+								});
+							}}
 						/>
 					))}
 				</div>
@@ -97,10 +90,34 @@ function OrderRowConfirm(props) {
 				<div>{props.FullName}</div>
 			</div>
 			<div class="controls">
-				<div className="btn confirm" onClick={setConfirmOrder}>
+				<div className="row-input">
+					<label for="role">Роль</label>
+					<select
+						list="listRole"
+						id="role"
+						placeholder="Выберите роль"
+						style={{ width: "238px" }}
+						onChange={event => props.onSetRole(event.target.value)}
+					>
+						<option>Не выбрано</option>
+						<option value={0}>Confirming</option>
+						<option value={1}>Writing</option>
+						<option value={2}>Printing</option>
+						<option value={3}>Issue</option>
+						<option value={100}>Done</option>
+						<option value={200}>Canceled</option>
+					</select>
+				</div>
+				<div className="btn confirm" onClick={props.onSetConfirmOrder}>
 					Подтвердить
 				</div>
-				<div className="btn delete" onClick={setCancelOrder}>
+				<div className="btn confirm" onClick={props.onSetCompleteOrder}>
+					Завершить
+				</div>
+				<div className="btn delete" onClick={props.onSetIssureOrder}>
+					На выдачу
+				</div>
+				<div className="btn delete" onClick={props.onSetCancelOrder}>
 					Отменить
 				</div>
 			</div>

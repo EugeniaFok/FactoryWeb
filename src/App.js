@@ -10,12 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeIsAuth, changeRole } from "./store/reducer";
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
-	<Route
-		{...rest}
-		render={props =>
-			!auth ? <Redirect to="/auth" /> : <Component {...props} />
-		}
-	/>
+	<Route {...rest} render={props => <Component {...props} />} />
 );
 
 const AuthRoute = ({ component: Component, auth, ...rest }) => (

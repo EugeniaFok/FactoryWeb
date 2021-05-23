@@ -15,10 +15,10 @@ export const RegisteredHandler = callback => {
 			}
 		})
 		.then(data => {
-			if (data === undefined) {
-				callback(null);
-			} else {
+			if (data !== undefined) {
 				callback(data);
+			} else {
+				callback(null);
 			}
 		});
 };
@@ -61,7 +61,6 @@ export const deleteItem = (url, callback) => {
 export function deleteListItemId(listItem, id) {
 	return listItem.filter(item => item.id !== id);
 }
-
 export const createItem = (url, body, callback) => {
 	const headers = new Headers();
 	headers.append("Content-Type", "application/json");
@@ -146,11 +145,66 @@ export const changePassword = (body, callback) => {
 		}
 	});
 };
+
+export const setOrderStatus = (id, status, callback) => {
+	const headers = new Headers();
+	headers.append("Content-Type", "application/json");
+	headers.append("Accept", "*/*");
+
+	fetch(
+		`http://${process.env.REACT_APP_HOST}/api/Orders/` + id + `/` + status,
+		{
+			method: "POST",
+			headers,
+			redirect: "follow",
+			credentials: "include",
+		}
+	)
+		.then(response => {
+			if (response.status === 204) {
+				response.json();
+			}
+		})
+		.then(data => {
+			if (data !== undefined) {
+				callback(data);
+			}
+		});
+};
+
+export const changeOrderStatus = (id, status, callback) => {
+	const headers = new Headers();
+	headers.append("Content-Type", "application/json");
+	headers.append("Accept", "*/*");
+
+	fetch(
+		`http://${process.env.REACT_APP_HOST}/api/Orders/` +
+			id +
+			`/changeState`,
+		{
+			method: "POST",
+			headers,
+			body: JSON.stringify(status),
+			redirect: "follow",
+			credentials: "include",
+		}
+	)
+		.then(response => {
+			if (response.status === 204) {
+				response.json();
+			}
+		})
+		.then(data => {
+			if (data !== undefined) {
+				callback(data);
+			}
+		});
+};
+
 export function addListItem(listItem, newItem) {
 	listItem.push(newItem);
 	return listItem;
 }
-
 export function setFilterList(listItems, strSearch) {
 	let result, strList;
 	strSearch = "/" + strSearch + "/g";
@@ -166,4 +220,8 @@ export function setFilterList(listItems, strSearch) {
 		}
 	}
 	return result;
+}
+
+export function setStateOrder(order, status) {
+	order = order.state = status;
 }
