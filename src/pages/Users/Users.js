@@ -45,7 +45,7 @@ function Users() {
 					<img
 						className="refresh icon"
 						src={IconRefresh}
-						alt="..."
+						alt="🔄"
 						onClick={() =>
 							getList(url, list => dispatch(setListUsers(list)))
 						}
