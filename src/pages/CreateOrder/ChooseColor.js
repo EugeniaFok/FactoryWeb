@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setColorId, setColors } from "../../store/reducer";
+import { getList } from "../../functions/functions";
 import "./ChooseColor.css";
 
 function ChooseColor(props) {
@@ -10,23 +11,13 @@ function ChooseColor(props) {
 
 		return { colors, colorId };
 	});
+	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		(async () => {
-			const response = await fetch(
-				`http://${process.env.REACT_APP_HOST}/api/colors`,
-				{
-					method: "GET",
-					credentials: "include",
-				}
-			);
-			const colors = await response.json();
-
-			dispatch(setColors(colors));
-		})();
-	}, [dispatch]);
+		getList(url, list => dispatch(setColors(list)));
+	}, [dispatch, url]);
 
 	return (
 		<div>

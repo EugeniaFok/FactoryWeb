@@ -8,6 +8,7 @@ import {
 	setOrderStatus,
 	changeOrderStatus,
 	setStateOrder,
+	getStatus,
 } from "../../functions/functions";
 
 function Confirmation(props) {
@@ -43,6 +44,7 @@ function Confirmation(props) {
 					{listOrders.map(element => (
 						<OrderRowConfirm
 							Id={element.id}
+							Number={element.number}
 							FullName={element.clientName}
 							Status={element.state}
 							onSetConfirmOrder={() => {
@@ -84,42 +86,69 @@ function Confirmation(props) {
 }
 
 function OrderRowConfirm(props) {
+	const { role } = useSelector(state => state);
 	return (
 		<div className="row_table">
 			<div className="order_item">
+				<div>{props.Number}</div>
 				<div>{props.FullName}</div>
+				<div>{getStatus(props.Status)}</div>
 			</div>
 			<div class="controls">
-				<div className="row-input">
-					<label for="role">Роль</label>
-					<select
-						list="listRole"
-						id="role"
-						placeholder="Выберите роль"
-						style={{ width: "238px" }}
-						onChange={event => props.onSetRole(event.target.value)}
+				{role === "Administrator" ? (
+					<div className="row-input">
+						<label for="role">Статус</label>
+						<select
+							list="listRole"
+							id="role"
+							placeholder="Выберите роль"
+							style={{ width: "238px" }}
+							onChange={event =>
+								props.onSetRole(event.target.value)
+							}
+						>
+							<option>Не выбрано</option>
+							<option value={0}>Confirming</option>
+							<option value={1}>Writing</option>
+							<option value={2}>Printing</option>
+							<option value={3}>Issue</option>
+							<option value={100}>Done</option>
+							<option value={200}>Canceled</option>
+						</select>
+					</div>
+				) : null}
+				{role === "Reception" ? (
+					<div
+						className="btn confirm"
+						onClick={props.onSetConfirmOrder}
 					>
-						<option>Не выбрано</option>
-						<option value={0}>Confirming</option>
-						<option value={1}>Writing</option>
-						<option value={2}>Printing</option>
-						<option value={3}>Issue</option>
-						<option value={100}>Done</option>
-						<option value={200}>Canceled</option>
-					</select>
-				</div>
-				<div className="btn confirm" onClick={props.onSetConfirmOrder}>
-					Подтвердить
-				</div>
-				<div className="btn confirm" onClick={props.onSetCompleteOrder}>
-					Завершить
-				</div>
-				<div className="btn delete" onClick={props.onSetIssureOrder}>
-					На выдачу
-				</div>
-				<div className="btn delete" onClick={props.onSetCancelOrder}>
-					Отменить
-				</div>
+						Подтвердить
+					</div>
+				) : null}
+				{role === "Writer" && role === "Printer" ? (
+					<div
+						className="btn confirm"
+						onClick={props.onSetCompleteOrder}
+					>
+						Завершить
+					</div>
+				) : null}
+				{role === "Issue" ? (
+					<div
+						className="btn delete"
+						onClick={props.onSetIssureOrder}
+					>
+						На выдачу
+					</div>
+				) : null}
+				{role === "Reception" ? (
+					<div
+						className="btn delete"
+						onClick={props.onSetCancelOrder}
+					>
+						Отменить
+					</div>
+				) : null}
 			</div>
 		</div>
 	);

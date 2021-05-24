@@ -221,3 +221,22 @@ export function setFilterList(listItems, strSearch) {
 export function setStateOrder(order, status) {
 	order = order.state = status;
 }
+
+export function getStatus(num) {
+	switch (num) {
+		case 0:
+			return "Confirming";
+		case 1:
+			return "Writing";
+		case 2:
+			return "Printing";
+		case 3:
+			return "Issue";
+		case 100:
+			return "Done";
+		case 200:
+			return "Canceled";
+		default:
+			return "Canceled";
+	}
+}
