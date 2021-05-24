@@ -2,23 +2,30 @@ import "./Confirmation.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setListOrders } from "../../store/reducer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
 	getList,
+	getListPost,
 	setOrderStatus,
 	changeOrderStatus,
 	setStateOrder,
 	getStatus,
+	deleteListItemId,
 } from "../../functions/functions";
 
 function Confirmation(props) {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `http://${process.env.REACT_APP_HOST}/api/Orders`;
-	const [curId, setId] = useState(false);
+	const { role } = useSelector(state => state);
+	const url =
+		role !== "Writer" && role !== "Printer"
+			? `http://${process.env.REACT_APP_HOST}/api/Orders`
+			: `http://${process.env.REACT_APP_HOST}/api/Orders/getTask`;
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListOrders(list)));
+		role !== "Writer" && role !== "Printer"
+			? getList(url, list => dispatch(setListOrders(list)))
+			: getListPost(url, list => dispatch(setListOrders(list)));
 	}, [dispatch]);
 
 	return (
@@ -30,7 +37,13 @@ function Confirmation(props) {
 					src={IconRefresh}
 					alt="..."
 					onClick={() =>
-						getList(url, list => dispatch(setListOrders(list)))
+						role !== "Writer" && role !== "Printer"
+							? getList(url, list =>
+									dispatch(setListOrders(list))
+							  )
+							: getListPost(url, list =>
+									dispatch(setListOrders(list))
+							  )
 					}
 				/>
 			</div>
@@ -48,33 +61,63 @@ function Confirmation(props) {
 							FullName={element.clientName}
 							Status={element.state}
 							onSetConfirmOrder={() => {
-								setId(element.id);
-								setOrderStatus(curId, "confirm", () => {
-									dispatch(setStateOrder(element, 1));
+								setOrderStatus(element.id, "confirm", () => {
+									dispatch(
+										setListOrders(
+											deleteListItemId(
+												listOrders,
+												element.id
+											)
+										)
+									);
 								});
 							}}
 							onSetIssureOrder={() => {
-								setId(element.id);
-								setOrderStatus(curId, "issue", () => {
-									dispatch(setStateOrder(element, 3));
+								setOrderStatus(element.id, "issue", () => {
+									dispatch(
+										deleteListItemId(listOrders, element.id)
+									);
 								});
 							}}
 							onSetCancelOrder={() => {
-								setId(element.id);
-								setOrderStatus(curId, "cancel", () => {
-									dispatch(setStateOrder(element, 200));
+								setOrderStatus(element.id, "cancel", () => {
+									dispatch(
+										setListOrders(
+											deleteListItemId(
+												listOrders,
+												element.id
+											)
+										)
+									);
 								});
 							}}
 							onSetCompleteOrder={() => {
-								setId(element.id);
-								setOrderStatus(curId, "completeTask", () => {
-									dispatch(setStateOrder(element, 100));
-								});
+								setOrderStatus(
+									element.id,
+									"completeTask",
+									() => {
+										dispatch(
+											setListOrders(
+												deleteListItemId(
+													listOrders,
+													element.id
+												)
+											)
+										);
+									}
+								);
 							}}
 							onSetChangeStatusOrder={status => {
-								setId(element.id);
-								changeOrderStatus(curId, status, () => {
-									dispatch(setStateOrder(element, status));
+								changeOrderStatus(element.id, status, () => {
+									dispatch(
+										setListOrders(
+											setStateOrder(
+												listOrders,
+												element,
+												status
+											)
+										)
+									);
 								});
 							}}
 						/>
@@ -86,7 +129,6 @@ function Confirmation(props) {
 }
 
 function OrderRowConfirm(props) {
-	const { role } = useSelector(state => state);
 	return (
 		<div className="row_table">
 			<div className="order_item">
@@ -95,7 +137,7 @@ function OrderRowConfirm(props) {
 				<div>{getStatus(props.Status)}</div>
 			</div>
 			<div class="controls">
-				{role === "Administrator" ? (
+				{props.role === "Administrator" ? (
 					<div className="row-input">
 						<label for="role">Статус</label>
 						<select
@@ -104,7 +146,7 @@ function OrderRowConfirm(props) {
 							placeholder="Выберите роль"
 							style={{ width: "238px" }}
 							onChange={event =>
-								props.onSetRole(event.target.value)
+								props.onSetChangeStatusOrder(event.target.value)
 							}
 						>
 							<option>Не выбрано</option>
@@ -117,7 +159,7 @@ function OrderRowConfirm(props) {
 						</select>
 					</div>
 				) : null}
-				{role === "Reception" ? (
+				{props.role === "Reception" ? (
 					<div
 						className="btn confirm"
 						onClick={props.onSetConfirmOrder}
@@ -125,7 +167,7 @@ function OrderRowConfirm(props) {
 						Подтвердить
 					</div>
 				) : null}
-				{role === "Writer" && role === "Printer" ? (
+				{props.role === "Writer" && props.role === "Printer" ? (
 					<div
 						className="btn confirm"
 						onClick={props.onSetCompleteOrder}
@@ -133,7 +175,7 @@ function OrderRowConfirm(props) {
 						Завершить
 					</div>
 				) : null}
-				{role === "Issue" ? (
+				{props.role === "Issue" ? (
 					<div
 						className="btn delete"
 						onClick={props.onSetIssureOrder}
@@ -141,7 +183,7 @@ function OrderRowConfirm(props) {
 						На выдачу
 					</div>
 				) : null}
-				{role === "Reception" ? (
+				{props.role === "Reception" ? (
 					<div
 						className="btn delete"
 						onClick={props.onSetCancelOrder}

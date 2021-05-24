@@ -20,7 +20,7 @@ function Models() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenCreate, setIsOpenCreate] = useState(false);
 	const [curName, setName] = useState(false);
-	const [curId, setId] = useState(false);
+	const [curId, setId] = useState();
 
 	const [newName, setNewName] = useState("");
 	const [newColorId, setNewColorId] = useState("");
