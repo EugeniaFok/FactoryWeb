@@ -13,7 +13,7 @@ function Tablo() {
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListOrders(list)));
-	}, [dispatch]);
+	}, [dispatch, url]);
 
 	return (
 		<div className="">
@@ -50,8 +50,8 @@ function TabloPanel(props) {
 		<div className="column">
 			<div className="caption-tablo">{props.title}</div>
 			<div className="tablo-area">
-				{listOrders.map(({ Id, clientName, state }) => (
-					<OrderRow Id={Id} FullName={clientName} Status={state} />
+				{listOrders.map(order => (
+					<OrderRow {...order} />
 				))}
 			</div>
 		</div>

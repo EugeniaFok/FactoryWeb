@@ -225,17 +225,16 @@ export function setStateOrder(order, status) {
 export function getStatus(num) {
 	switch (num) {
 		case 0:
-			return "Confirming";
+			return "Подтвеждение";
 		case 1:
-			return "Writing";
+			return "На нанесении";
 		case 2:
-			return "Printing";
+			return "На печати";
 		case 3:
-			return "Issue";
+			return "Выдача";
 		case 100:
-			return "Done";
+			return "Завершена";
 		case 200:
-			return "Canceled";
 		default:
 			return "Canceled";
 	}
