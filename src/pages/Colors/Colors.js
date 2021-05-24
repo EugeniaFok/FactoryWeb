@@ -33,17 +33,15 @@ function Colors() {
 		<div className="">
 			<div className="caption-page">
 				Список всех цветов
-				<div className="">
-					<img
-						className="refresh icon"
-						src={IconRefresh}
-						alt="..."
+				<div className="btn-group">
+					<button
+						className="btn-refresh"
 						onClick={() =>
 							getList(url, list => dispatch(setColors(list)))
 						}
 					/>
 					<button
-						className="factory-btn-create"
+						className="btn-create"
 						onClick={() => {
 							setIsOpenCreate(true);
 						}}

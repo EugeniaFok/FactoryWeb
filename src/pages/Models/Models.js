@@ -34,17 +34,15 @@ function Models() {
 		<div className="">
 			<div className="caption-page">
 				Список моделей
-				<div>
-					<img
-						className="refresh icon"
-						src={IconRefresh}
-						alt="..."
+				<div className="btn-group">
+					<button
+						className="btn-refresh"
 						onClick={() =>
 							getList(url, list => dispatch(setModels(list)))
 						}
 					/>
 					<button
-						className="factory-btn-create"
+						className="btn-create"
 						onClick={() => {
 							setIsOpenCreate(true);
 						}}

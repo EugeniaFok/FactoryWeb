@@ -19,14 +19,14 @@ function Tablo() {
 		<div className="">
 			<div className="caption-page">
 				Табло заказов
-				<img
-					className="refresh icon"
-					src={IconRefresh}
-					alt="..."
-					onClick={() =>
-						getList(url, list => dispatch(setListOrders(list)))
-					}
-				/>
+				<div className="btn-group">
+					<button
+						className="btn-refresh"
+						onClick={() =>
+							getList(url, list => dispatch(setListOrders(list)))
+						}
+					/>
+				</div>
 			</div>
 			<div style={{ display: "flex" }}>
 				<TabloPanel

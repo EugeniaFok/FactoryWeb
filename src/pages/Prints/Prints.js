@@ -46,17 +46,15 @@ function Prints(props) {
 		<div className="">
 			<div className="caption-page">
 				Принты
-				<div className="">
-					<img
-						className="refresh icon"
-						src={IconRefresh}
-						alt="..."
+				<div className="btn-group">
+					<button
+						className="btn-refresh"
 						onClick={() =>
 							getList(url, list => dispatch(setPrints(list)))
 						}
 					/>
 					<button
-						className="factory-btn-create"
+						className="btn-create"
 						onClick={() => {
 							setIsOpenCreate(true);
 						}}

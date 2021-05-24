@@ -32,20 +32,20 @@ function Confirmation(props) {
 		<div className="">
 			<div className="caption-page">
 				Подтверждение заказа
-				<img
-					className="refresh icon"
-					src={IconRefresh}
-					alt="..."
-					onClick={() =>
-						role !== "Writer" && role !== "Printer"
-							? getList(url, list =>
-									dispatch(setListOrders(list))
-							  )
-							: getListPost(url, list =>
-									dispatch(setListOrders(list))
-							  )
-					}
-				/>
+				<div className="btn-group">
+					<button
+						className="btn-refresh"
+						onClick={() =>
+							role !== "Writer" && role !== "Printer"
+								? getList(url, list =>
+										dispatch(setListOrders(list))
+								  )
+								: getListPost(url, list =>
+										dispatch(setListOrders(list))
+								  )
+						}
+					/>
+				</div>
 			</div>
 			<div className="tablo-area">
 				<div>
