@@ -59,6 +59,8 @@ function Confirmation(props) {
 							Number={element.number}
 							FullName={element.clientName}
 							Status={element.state}
+							Model={element.model}
+							Size={element.size}
 							Role={role}
 							onSetConfirmOrder={() => {
 								setOrderStatus(element.id, "confirm", () => {
@@ -114,7 +116,7 @@ function Confirmation(props) {
 											setStateOrder(
 												listOrders,
 												element,
-												status
+												Number(status)
 											)
 										)
 									);
@@ -131,10 +133,11 @@ function Confirmation(props) {
 function OrderRowConfirm(props) {
 	return (
 		<div className="row_table">
-			<div className="tablo_row">
-				<div>{props.Number}</div>
-				<div>{props.FullName}</div>
-				<div>{getStatus(props.Status)}</div>
+			<div className="row_table tablo_row">
+				<div>{`Клиент: ${props.FullName}`}</div>
+				<div>{`Статус: ${getStatus(props.Status)}`}</div>
+				<div>{`Модель: ${props.Model.name}`}</div>
+				<div>{`Размер: ${props.Size.value}`}</div>
 			</div>
 			<div class="controls">
 				{props.Role === "Administrator" ? (

@@ -204,17 +204,11 @@ export const changeOrderStatus = (id, status, callback) => {
 			redirect: "follow",
 			credentials: "include",
 		}
-	)
-		.then(response => {
-			if (response.status === 204) {
-				response.json();
-			}
-		})
-		.then(data => {
-			if (data !== undefined) {
-				callback(data);
-			}
-		});
+	).then(response => {
+		if (response.status === 204) {
+			callback();
+		}
+	});
 };
 
 export function addListItem(listItem, newItem) {
