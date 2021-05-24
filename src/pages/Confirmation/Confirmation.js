@@ -5,6 +5,7 @@ import { setListOrders } from "../../store/reducer";
 import { useEffect } from "react";
 import {
 	getList,
+	getListPost,
 	setOrderStatus,
 	changeOrderStatus,
 	setStateOrder,
@@ -15,10 +16,16 @@ import {
 function Confirmation(props) {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `http://${process.env.REACT_APP_HOST}/api/Orders`;
+	const { role } = useSelector(state => state);
+	const url =
+		role !== "Writer" && role !== "Printer"
+			? `http://${process.env.REACT_APP_HOST}/api/Orders`
+			: `http://${process.env.REACT_APP_HOST}/api/Orders/getTask`;
 
 	useEffect(() => {
-		getList(url, list => dispatch(setListOrders(list)));
+		role !== "Writer" && role !== "Printer"
+			? getList(url, list => dispatch(setListOrders(list)))
+			: getListPost(url, list => dispatch(setListOrders(list)));
 	}, [dispatch]);
 
 	return (
@@ -30,7 +37,13 @@ function Confirmation(props) {
 					src={IconRefresh}
 					alt="..."
 					onClick={() =>
-						getList(url, list => dispatch(setListOrders(list)))
+						role !== "Writer" && role !== "Printer"
+							? getList(url, list =>
+									dispatch(setListOrders(list))
+							  )
+							: getListPost(url, list =>
+									dispatch(setListOrders(list))
+							  )
 					}
 				/>
 			</div>
@@ -116,7 +129,6 @@ function Confirmation(props) {
 }
 
 function OrderRowConfirm(props) {
-	const { role } = useSelector(state => state);
 	return (
 		<div className="row_table">
 			<div className="order_item">
@@ -125,7 +137,7 @@ function OrderRowConfirm(props) {
 				<div>{getStatus(props.Status)}</div>
 			</div>
 			<div class="controls">
-				{role === "Administrator" ? (
+				{props.role === "Administrator" ? (
 					<div className="row-input">
 						<label for="role">Статус</label>
 						<select
@@ -147,7 +159,7 @@ function OrderRowConfirm(props) {
 						</select>
 					</div>
 				) : null}
-				{role === "Reception" ? (
+				{props.role === "Reception" ? (
 					<div
 						className="btn confirm"
 						onClick={props.onSetConfirmOrder}
@@ -155,7 +167,7 @@ function OrderRowConfirm(props) {
 						Подтвердить
 					</div>
 				) : null}
-				{role === "Writer" && role === "Printer" ? (
+				{props.role === "Writer" && props.role === "Printer" ? (
 					<div
 						className="btn confirm"
 						onClick={props.onSetCompleteOrder}
@@ -163,7 +175,7 @@ function OrderRowConfirm(props) {
 						Завершить
 					</div>
 				) : null}
-				{role === "Issue" ? (
+				{props.role === "Issue" ? (
 					<div
 						className="btn delete"
 						onClick={props.onSetIssureOrder}
@@ -171,7 +183,7 @@ function OrderRowConfirm(props) {
 						На выдачу
 					</div>
 				) : null}
-				{role === "Reception" ? (
+				{props.role === "Reception" ? (
 					<div
 						className="btn delete"
 						onClick={props.onSetCancelOrder}

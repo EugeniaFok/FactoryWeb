@@ -38,6 +38,26 @@ export const getList = (url, callback) => {
 			callback(data);
 		});
 };
+export const getListPost = (url, callback) => {
+	const headers = new Headers();
+	headers.append("Content-Type", "application/json");
+	headers.append("Accept", "*/*");
+
+	fetch(url, {
+		method: "POST",
+		headers,
+		redirect: "follow",
+		credentials: "include",
+	})
+		.then(response => {
+			if (response.status === 204) {
+				return response.json();
+			}
+		})
+		.then(data => {
+			callback(data);
+		});
+};
 export const deleteItem = (url, callback) => {
 	const headers = new Headers();
 	headers.append("Content-Type", "application/json");
