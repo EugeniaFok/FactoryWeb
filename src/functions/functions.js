@@ -176,11 +176,11 @@ export const changeOrderStatus = (id, status, callback) => {
 	fetch(
 		`http://${process.env.REACT_APP_HOST}/api/Orders/` +
 			id +
-			`/changeState`,
+			`/changeState?state=` +
+			status,
 		{
 			method: "POST",
 			headers,
-			body: JSON.stringify(status),
 			redirect: "follow",
 			credentials: "include",
 		}
@@ -218,8 +218,13 @@ export function setFilterList(listItems, strSearch) {
 	return result;
 }
 
-export function setStateOrder(order, status) {
-	order = order.state = status;
+export function setStateOrder(listOrders, order, status) {
+	let index = listOrders.indexOf(order);
+	if (index !== -1) {
+		order.state = status;
+		listOrders[index] = order;
+	}
+	return listOrders;
 }
 
 export function getStatus(num) {

@@ -2,20 +2,20 @@ import "./Confirmation.css";
 import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setListOrders } from "../../store/reducer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
 	getList,
 	setOrderStatus,
 	changeOrderStatus,
 	setStateOrder,
 	getStatus,
+	deleteListItemId,
 } from "../../functions/functions";
 
 function Confirmation(props) {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const url = `http://${process.env.REACT_APP_HOST}/api/Orders`;
-	const [curId, setId] = useState(false);
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListOrders(list)));
@@ -48,33 +48,63 @@ function Confirmation(props) {
 							FullName={element.clientName}
 							Status={element.state}
 							onSetConfirmOrder={() => {
-								setId(element.id);
-								setOrderStatus(curId, "confirm", () => {
-									dispatch(setStateOrder(element, 1));
+								setOrderStatus(element.id, "confirm", () => {
+									dispatch(
+										setListOrders(
+											deleteListItemId(
+												listOrders,
+												element.id
+											)
+										)
+									);
 								});
 							}}
 							onSetIssureOrder={() => {
-								setId(element.id);
-								setOrderStatus(curId, "issue", () => {
-									dispatch(setStateOrder(element, 3));
+								setOrderStatus(element.id, "issue", () => {
+									dispatch(
+										deleteListItemId(listOrders, element.id)
+									);
 								});
 							}}
 							onSetCancelOrder={() => {
-								setId(element.id);
-								setOrderStatus(curId, "cancel", () => {
-									dispatch(setStateOrder(element, 200));
+								setOrderStatus(element.id, "cancel", () => {
+									dispatch(
+										setListOrders(
+											deleteListItemId(
+												listOrders,
+												element.id
+											)
+										)
+									);
 								});
 							}}
 							onSetCompleteOrder={() => {
-								setId(element.id);
-								setOrderStatus(curId, "completeTask", () => {
-									dispatch(setStateOrder(element, 100));
-								});
+								setOrderStatus(
+									element.id,
+									"completeTask",
+									() => {
+										dispatch(
+											setListOrders(
+												deleteListItemId(
+													listOrders,
+													element.id
+												)
+											)
+										);
+									}
+								);
 							}}
 							onSetChangeStatusOrder={status => {
-								setId(element.id);
-								changeOrderStatus(curId, status, () => {
-									dispatch(setStateOrder(element, status));
+								changeOrderStatus(element.id, status, () => {
+									dispatch(
+										setListOrders(
+											setStateOrder(
+												listOrders,
+												element,
+												status
+											)
+										)
+									);
 								});
 							}}
 						/>
@@ -104,7 +134,7 @@ function OrderRowConfirm(props) {
 							placeholder="Выберите роль"
 							style={{ width: "238px" }}
 							onChange={event =>
-								props.onSetRole(event.target.value)
+								props.onSetChangeStatusOrder(event.target.value)
 							}
 						>
 							<option>Не выбрано</option>
