@@ -26,7 +26,7 @@ function Confirmation(props) {
 		role !== "Writer" && role !== "Printer"
 			? getList(url, list => dispatch(setListOrders(list)))
 			: getListPost(url, list => dispatch(setListOrders(list)));
-	}, [dispatch]);
+	}, [dispatch, url]);
 
 	return (
 		<div className="">
@@ -47,7 +47,6 @@ function Confirmation(props) {
 					}
 				/>
 			</div>
-
 			<div className="tablo-area">
 				<div>
 					<input type="text" placeholder="Найти" />
@@ -60,6 +59,7 @@ function Confirmation(props) {
 							Number={element.number}
 							FullName={element.clientName}
 							Status={element.state}
+							Role={role}
 							onSetConfirmOrder={() => {
 								setOrderStatus(element.id, "confirm", () => {
 									dispatch(
@@ -131,13 +131,13 @@ function Confirmation(props) {
 function OrderRowConfirm(props) {
 	return (
 		<div className="row_table">
-			<div className="order_item">
+			<div className="tablo_row">
 				<div>{props.Number}</div>
 				<div>{props.FullName}</div>
 				<div>{getStatus(props.Status)}</div>
 			</div>
 			<div class="controls">
-				{props.role === "Administrator" ? (
+				{props.Role === "Administrator" ? (
 					<div className="row-input">
 						<label for="role">Статус</label>
 						<select
@@ -159,7 +159,7 @@ function OrderRowConfirm(props) {
 						</select>
 					</div>
 				) : null}
-				{props.role === "Reception" ? (
+				{props.Role === "Reception" ? (
 					<div
 						className="btn confirm"
 						onClick={props.onSetConfirmOrder}
@@ -167,7 +167,7 @@ function OrderRowConfirm(props) {
 						Подтвердить
 					</div>
 				) : null}
-				{props.role === "Writer" && props.role === "Printer" ? (
+				{props.Role === "Writer" && props.Role === "Printer" ? (
 					<div
 						className="btn confirm"
 						onClick={props.onSetCompleteOrder}
@@ -175,7 +175,7 @@ function OrderRowConfirm(props) {
 						Завершить
 					</div>
 				) : null}
-				{props.role === "Issue" ? (
+				{props.Role === "Issue" ? (
 					<div
 						className="btn delete"
 						onClick={props.onSetIssureOrder}
@@ -183,7 +183,7 @@ function OrderRowConfirm(props) {
 						На выдачу
 					</div>
 				) : null}
-				{props.role === "Reception" ? (
+				{props.Role === "Reception" ? (
 					<div
 						className="btn delete"
 						onClick={props.onSetCancelOrder}
