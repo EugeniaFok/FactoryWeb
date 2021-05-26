@@ -2,6 +2,7 @@ const initState = {
 	role: "Client",
 	isAuth: false,
 	order: {
+		id: "",
 		colorId: "",
 		modelId: "",
 		sizeId: "",
@@ -10,6 +11,8 @@ const initState = {
 			width: 50,
 			height: 50,
 			base64: "",
+			top: 0,
+			left: 0,
 		},
 	},
 	listOrders: [],
@@ -37,7 +40,6 @@ export const setListUsers = listUsers => ({
 	type: "SET_LIST_USERS",
 	listUsers,
 });
-
 export const setColors = colors => ({
 	type: "SET_COLORS",
 	colors,
@@ -54,7 +56,6 @@ export const setSizes = sizes => ({
 	type: "SET_SIZES",
 	sizes,
 });
-
 export const setColorId = colorId => ({
 	type: "SET_COLOR_ID",
 	colorId,
@@ -75,6 +76,11 @@ export const setPrintContent = (id, base64) => ({
 	type: "SET_PRINT_CONTENT",
 	id,
 	base64,
+});
+
+export const setOrder = order => ({
+	type: "SET_ORDER",
+	order,
 });
 // ACTIONS
 
@@ -141,9 +147,13 @@ export const reducer = (state = initState, action) => {
 						...state.order.print,
 						width: action.size.width,
 						height: action.size.height,
+						top: action.size.top,
+						left: action.size.left,
 					},
 				},
 			};
+		case "SET_ORDER":
+			return { ...state, order: action.order };
 		default:
 			return state;
 	}

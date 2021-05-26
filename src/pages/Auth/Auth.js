@@ -1,7 +1,7 @@
 import "./Auth.css";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeRole } from "../../store/reducer";
 import { changePassword } from "../../functions/functions";
 

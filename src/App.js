@@ -26,6 +26,7 @@ function App() {
 	const { isAuth } = useSelector(state => state);
 	const { role } = useSelector(state => state);
 	const dispatch = useDispatch();
+	let pageHome = "/home";
 
 	useEffect(() => {
 		RegisteredHandler(role => {
@@ -35,6 +36,15 @@ function App() {
 			dispatch(changeRole(role ?? "Client"));
 		});
 	}, [dispatch]);
+
+	pageHome =
+		role === ("Writer" || "Printer")
+			? "/task"
+			: role === ("Reception" || "Administrator" || "Issuer")
+			? "/orders"
+			: role === ("Client" || "")
+			? "/createOrder"
+			: "/home";
 
 	return (
 		<div className="App">
@@ -51,7 +61,7 @@ function App() {
 						/>
 					)
 				)}
-				<Redirect from="/" to="/home" />
+				<Redirect from="/" to={pageHome} />
 			</Switch>
 		</div>
 	);

@@ -1,31 +1,25 @@
 import "./Confirmation.css";
-import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setListOrders } from "../../store/reducer";
 import { useEffect } from "react";
 import {
 	getList,
-	getListPost,
 	setOrderStatus,
 	changeOrderStatus,
 	setStateOrder,
 	getStatus,
 	deleteListItemId,
+	deleteItem,
 } from "../../functions/functions";
 
 function Confirmation(props) {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const { role } = useSelector(state => state);
-	const url =
-		role !== "Writer" && role !== "Printer"
-			? `http://${process.env.REACT_APP_HOST}/api/Orders`
-			: `http://${process.env.REACT_APP_HOST}/api/Orders/getTask`;
+	const url = `http://${process.env.REACT_APP_HOST}/api/Orders/`;
 
 	useEffect(() => {
-		role !== "Writer" && role !== "Printer"
-			? getList(url, list => dispatch(setListOrders(list)))
-			: getListPost(url, list => dispatch(setListOrders(list)));
+		getList(url, list => dispatch(setListOrders(list)));
 	}, [dispatch, url]);
 
 	return (
@@ -36,15 +30,26 @@ function Confirmation(props) {
 					<button
 						className="btn-refresh"
 						onClick={() =>
-							role !== "Writer" && role !== "Printer"
-								? getList(url, list =>
-										dispatch(setListOrders(list))
-								  )
-								: getListPost(url, list =>
-										dispatch(setListOrders(list))
-								  )
+							getList(url, list => dispatch(setListOrders(list)))
 						}
 					/>
+					{role === "Administrator" ? (
+						<button
+							className="btn-delete"
+							onClick={() =>
+								getList(url, () => {
+									deleteItem(
+										`http://${process.env.REACT_APP_HOST}/api/Orders/deleteAll`,
+										() => {
+											dispatch(setListOrders([]));
+										}
+									);
+								})
+							}
+						>
+							Удалить все
+						</button>
+					) : null}
 				</div>
 			</div>
 			<div className="tablo-area">
@@ -74,6 +79,18 @@ function Confirmation(props) {
 									);
 								});
 							}}
+							onDelete={() => {
+								deleteItem(url + element.id, () => {
+									dispatch(
+										setListOrders(
+											deleteListItemId(
+												listOrders,
+												element.id
+											)
+										)
+									);
+								});
+							}}
 							onSetIssureOrder={() => {
 								setOrderStatus(element.id, "issue", () => {
 									dispatch(
@@ -92,22 +109,6 @@ function Confirmation(props) {
 										)
 									);
 								});
-							}}
-							onSetCompleteOrder={() => {
-								setOrderStatus(
-									element.id,
-									"completeTask",
-									() => {
-										dispatch(
-											setListOrders(
-												deleteListItemId(
-													listOrders,
-													element.id
-												)
-											)
-										);
-									}
-								);
 							}}
 							onSetChangeStatusOrder={status => {
 								changeOrderStatus(element.id, status, () => {
@@ -162,20 +163,17 @@ function OrderRowConfirm(props) {
 						</select>
 					</div>
 				) : null}
+				{props.Role === "Administrator" ? (
+					<div className="btn delete" onClick={props.onDelete}>
+						Удалить
+					</div>
+				) : null}
 				{props.Role === "Reception" ? (
 					<div
 						className="btn confirm"
 						onClick={props.onSetConfirmOrder}
 					>
 						Подтвердить
-					</div>
-				) : null}
-				{props.Role === "Writer" && props.Role === "Printer" ? (
-					<div
-						className="btn confirm"
-						onClick={props.onSetCompleteOrder}
-					>
-						Завершить
 					</div>
 				) : null}
 				{props.Role === "Issue" ? (

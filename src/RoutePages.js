@@ -16,7 +16,7 @@ import Models from "./pages/Models/Models";
 import IconModels from "./images/model.svg";
 import Sizes from "./pages/Sizes/Sizes";
 import IconSizes from "./images/size.svg";
-
+import GetTask from "./pages/Task/Task";
 export const PAGES = [
 	{
 		title: "Табло",
@@ -37,7 +37,7 @@ export const PAGES = [
 		href: "/orders",
 		component: Confirmation,
 		icon: IconConfirmation,
-		role: ["Reception", "Administrator", "Writer", "Printer", "Issuer"],
+		role: ["Reception", "Administrator", "Issuer"],
 	},
 	{
 		title: "Пользователи",
@@ -73,6 +73,13 @@ export const PAGES = [
 		component: Sizes,
 		icon: IconSizes,
 		role: ["Administrator"],
+	},
+	{
+		title: "Задание",
+		href: "/task",
+		component: GetTask,
+		icon: IconHome,
+		role: ["Writer", "Printer"],
 	},
 ];
 export const INFO_AUTH = {

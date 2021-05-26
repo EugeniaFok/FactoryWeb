@@ -1,5 +1,4 @@
 import "./Users.css";
-import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setListUsers } from "../../store/reducer";
 import {

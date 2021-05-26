@@ -63,24 +63,50 @@ code {
 .factory-btn:hover{
 	background:  rgb(118, 181, 205);
 }
-.factory-btn-delete{
-	width: 150px;
-	height: 30px;
-	background: red;
+
+/* Button group */
+
+.btn-group {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    margin-top: 20px;
 }
-.factory-btn-delete:hover{
-	background:  rgb(145, 1, 1);
+
+.btn-group > button {
+    cursor: pointer;
 }
-.factory-btn-create{
-	width: 150px;
-	height: 30px;
-	background: lightgreen;
+
+.btn-group > button:active {
+    box-shadow: inset 1px 1px 4px 2px #00000013;
 }
-.factory-btn-create:hover{
-	background:  rgb(93, 151, 93);
+
+.btn-group > .btn-refresh {
+    position: initial;
+    width: 30px;
+    height: 30px;
+    border-radius: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 0;
+    border: none;
+    background-image: url(./images/refresh.svg);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btn-group > .btn-create {
+    height: 30px;
+    border: none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.btn-group > .btn-delete {
+    height: 30px;
+    border: none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+	background-color: rgb(250, 69, 62);
 }
 
 /* Controls */

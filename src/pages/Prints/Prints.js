@@ -1,5 +1,4 @@
 import "./Prints.css";
-import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setPrints } from "../../store/reducer";
 import { useEffect, useState } from "react";

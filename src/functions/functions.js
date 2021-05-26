@@ -50,12 +50,14 @@ export const getListPost = (url, callback) => {
 		credentials: "include",
 	})
 		.then(response => {
-			if (response.status === 204) {
+			if (response.status === 200) {
 				return response.json();
 			}
 		})
 		.then(data => {
-			callback(data);
+			if (data !== undefined) {
+				callback(data);
+			}
 		});
 };
 export const deleteItem = (url, callback) => {
@@ -175,17 +177,11 @@ export const setOrderStatus = (id, status, callback) => {
 			redirect: "follow",
 			credentials: "include",
 		}
-	)
-		.then(response => {
-			if (response.status === 204) {
-				response.json();
-			}
-		})
-		.then(data => {
-			if (data !== undefined) {
-				callback(data);
-			}
-		});
+	).then(response => {
+		if (response.status === 204) {
+			callback();
+		}
+	});
 };
 
 export const changeOrderStatus = (id, status, callback) => {

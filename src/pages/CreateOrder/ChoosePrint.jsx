@@ -1,6 +1,6 @@
 import "./ChoosePrint.css";
 import { useEffect, useState } from "react";
-import { Maker } from "./childs/Maker";
+import { Maker } from "../../components/childs/Maker";
 import { useDispatch } from "react-redux";
 import { setPrintContent } from "../../store/reducer";
 import { Scrollbars } from "rc-scrollbars";

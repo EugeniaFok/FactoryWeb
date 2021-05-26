@@ -36,7 +36,7 @@
 .model_wrapper__img {
     width: 300px;
     height: 300px;
-    background-image: url(./childs/contents/model.png);
+    background-image: url(../../components/childs/contents/model.png);
     background-repeat: no-repeat;
     background-size: contain;
 }

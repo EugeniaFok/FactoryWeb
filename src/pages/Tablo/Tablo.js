@@ -1,6 +1,5 @@
 import "./Tablo.css";
 import OrderRow from "./OrderRow";
-import IconRefresh from "../../images/refresh.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setListOrders } from "../../store/reducer";
 import { useEffect } from "react";
