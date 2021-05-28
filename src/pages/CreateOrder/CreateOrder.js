@@ -95,17 +95,15 @@ const createOrderHandler =
 
 function CreationPanel() {
 	const history = useHistory();
-	const { modelId, sizeId, printId, top, left, width, height } = useSelector(
-		state => {
-			const {
-				modelId,
-				sizeId,
-				print: { id: printId, width, height, top, left },
-			} = state.order;
+	const { modelId, sizeId, printId, top, left } = useSelector(state => {
+		const {
+			modelId,
+			sizeId,
+			print: { id: printId, top, left },
+		} = state.order;
 
-			return { modelId, sizeId, printId, top, left, width, height };
-		}
-	);
+		return { modelId, sizeId, printId, top, left };
+	});
 	const [clientName, setClientName] = useState("");
 	const [clientPhone, setClientPhone] = useState("");
 

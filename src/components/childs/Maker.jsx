@@ -8,17 +8,15 @@ export const Maker = props => {
 		color,
 		model,
 		size,
-		print: { width, height, base64 },
+		print: { width, height, base64, top, left },
 	} = useSelector(state => {
-		const { colorId, modelId, sizeId, print, top, left } = state.order;
+		const { colorId, modelId, sizeId, print } = state.order;
 		const { colors, models, sizes } = state;
 
 		return {
 			color: colors.find(color => color.id === colorId),
 			model: models.find(model => model.id === modelId),
 			size: sizes.find(size => size.id === sizeId),
-			top,
-			left,
 			print,
 		};
 	});
@@ -35,29 +33,24 @@ export const Maker = props => {
 							<Rnd
 								bounds="parent"
 								lockAspectRatio
-								onDrag={(e, position) => {
+								onDragStop={(e, position) => {
 									dispatch(
 										setPrintSize({
-											top: position.x,
-											left: position.y,
 											width,
 											height,
+											top: position.x,
+											left: position.y,
 										})
 									);
+									alert(size.top);
 								}}
-								onResize={(
-									e,
-									direction,
-									ref,
-									delta,
-									position
-								) => {
+								onResize={ref => {
 									dispatch(
 										setPrintSize({
 											width: ref.style.width,
 											height: ref.style.height,
-											top: position.x,
-											left: position.y,
+											top,
+											left,
 										})
 									);
 								}}

@@ -178,7 +178,7 @@ export const setOrderStatus = (id, status, callback) => {
 			credentials: "include",
 		}
 	).then(response => {
-		if (response.status === 204) {
+		if (response.status === 204 || response.status === 200) {
 			callback();
 		}
 	});
