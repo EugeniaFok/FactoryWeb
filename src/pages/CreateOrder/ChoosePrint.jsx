@@ -13,7 +13,7 @@ function ChoosePrint(props) {
 	useEffect(() => {
 		(async () => {
 			const response = await fetch(
-				`http://${process.env.REACT_APP_HOST}/api/images`,
+				`${process.env.REACT_APP_HOST}/api/images`,
 				{
 					method: "GET",
 					credentials: "include",

@@ -16,7 +16,7 @@ function ChooseSize(props) {
 	useEffect(() => {
 		(async () => {
 			const response = await fetch(
-				`http://${process.env.REACT_APP_HOST}/api/sizes`,
+				`${process.env.REACT_APP_HOST}/api/sizes`,
 				{
 					method: "GET",
 					credentials: "include",

@@ -6,7 +6,7 @@ import { Maker } from "../../components/childs/Maker";
 import { getListPost, setOrderStatus } from "../../functions/functions";
 
 function GetTask(props) {
-	const url = `http://${process.env.REACT_APP_HOST}/api/Orders/getTask`;
+	const url = `${process.env.REACT_APP_HOST}/api/Orders/getTask`;
 	const [isOpenOrder, setIsOpenOrder] = useState(false);
 	const [isOpenButton, setIsOpenButton] = useState(true);
 	const { role } = useSelector(state => state);

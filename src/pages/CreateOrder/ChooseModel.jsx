@@ -16,7 +16,7 @@ function ChooseModel(props) {
 	useEffect(() => {
 		(async () => {
 			const response = await fetch(
-				`http://${process.env.REACT_APP_HOST}/api/models`,
+				`${process.env.REACT_APP_HOST}/api/models`,
 				{
 					method: "GET",
 					credentials: "include",

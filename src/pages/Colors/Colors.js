@@ -15,7 +15,7 @@ import CreateItem from "../../components/CreateItem";
 function Colors() {
 	const { colors } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
+	const url = `${process.env.REACT_APP_HOST}/api/Colors/`;
 	const [isOpenModal, setIsOpen] = useState(false);
 	const [isOpenCreate, setIsOpenCreate] = useState(false);
 	const [curName, setName] = useState(false);

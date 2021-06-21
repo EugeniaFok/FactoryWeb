@@ -11,7 +11,7 @@ function ChooseColor(props) {
 
 		return { colors, colorId };
 	});
-	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
+	const url = `${process.env.REACT_APP_HOST}/api/Colors/`;
 
 	const dispatch = useDispatch();
 

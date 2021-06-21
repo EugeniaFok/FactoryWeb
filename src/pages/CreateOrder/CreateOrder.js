@@ -80,7 +80,7 @@ const createOrderHandler =
 			clientPhone: phone,
 		});
 
-		fetch(`http://${process.env.REACT_APP_HOST}/api/Orders`, {
+		fetch(`${process.env.REACT_APP_HOST}/api/Orders`, {
 			method: "POST",
 			headers,
 			body: raw,

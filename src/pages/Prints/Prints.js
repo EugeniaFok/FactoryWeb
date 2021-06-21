@@ -17,7 +17,7 @@ const types = ["jpg", "svg", "png"];
 function Prints(props) {
 	const { prints } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `http://${process.env.REACT_APP_HOST}/api/Images/`;
+	const url = `${process.env.REACT_APP_HOST}/api/Images/`;
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenCreate, setIsOpenCreate] = useState(false);
 	const [curName, setName] = useState(false);

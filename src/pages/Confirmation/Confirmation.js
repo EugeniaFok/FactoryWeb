@@ -16,7 +16,7 @@ function Confirmation(props) {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const { role } = useSelector(state => state);
-	const url = `http://${process.env.REACT_APP_HOST}/api/Orders/`;
+	const url = `${process.env.REACT_APP_HOST}/api/Orders/`;
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListOrders(list)));
@@ -39,7 +39,7 @@ function Confirmation(props) {
 							onClick={() =>
 								getList(url, () => {
 									deleteItem(
-										`http://${process.env.REACT_APP_HOST}/api/Orders/deleteAll`,
+										`${process.env.REACT_APP_HOST}/api/Orders/deleteAll`,
 										() => {
 											dispatch(setListOrders([]));
 										}

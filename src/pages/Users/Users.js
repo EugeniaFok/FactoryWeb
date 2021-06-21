@@ -16,8 +16,8 @@ import { ROLES } from "../../RoutePages";
 function Users() {
 	const { listUsers } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `http://${process.env.REACT_APP_HOST}/api/Users/`;
-	const urlDelAdd = `http://${process.env.REACT_APP_HOST}/api/Account/`;
+	const url = `${process.env.REACT_APP_HOST}/api/Users/`;
+	const urlDelAdd = `${process.env.REACT_APP_HOST}/api/Account/`;
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenCreate, setIsOpenCreate] = useState(false);
 	const [curLogin, setUser] = useState();

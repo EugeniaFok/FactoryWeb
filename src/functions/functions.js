@@ -3,7 +3,7 @@ export const RegisteredHandler = callback => {
 	headers.append("Content-Type", "application/json");
 	headers.append("Accept", "*/*");
 
-	fetch(`http://${process.env.REACT_APP_HOST}/api/account/registered`, {
+	fetch(`${process.env.REACT_APP_HOST}/api/account/registered`, {
 		method: "POST",
 		headers,
 		redirect: "follow",
@@ -134,7 +134,7 @@ export const logout = callback => {
 	headers.append("Content-Type", "application/json");
 	headers.append("Accept", "*/*");
 
-	fetch(`http://${process.env.REACT_APP_HOST}/api/Account/logout`, {
+	fetch(`${process.env.REACT_APP_HOST}/api/Account/logout`, {
 		method: "POST",
 		headers,
 		redirect: "follow",
@@ -151,7 +151,7 @@ export const changePassword = (body, callback) => {
 	headers.append("Content-Type", "application/json");
 	headers.append("Accept", "*/*");
 
-	fetch(`http://${process.env.REACT_APP_HOST}/api/Account/changePassword`, {
+	fetch(`${process.env.REACT_APP_HOST}/api/Account/changePassword`, {
 		method: "POST",
 		headers,
 		body: JSON.stringify(body),
@@ -169,15 +169,12 @@ export const setOrderStatus = (id, status, callback) => {
 	headers.append("Content-Type", "application/json");
 	headers.append("Accept", "*/*");
 
-	fetch(
-		`http://${process.env.REACT_APP_HOST}/api/Orders/` + id + `/` + status,
-		{
-			method: "POST",
-			headers,
-			redirect: "follow",
-			credentials: "include",
-		}
-	).then(response => {
+	fetch(`${process.env.REACT_APP_HOST}/api/Orders/` + id + `/` + status, {
+		method: "POST",
+		headers,
+		redirect: "follow",
+		credentials: "include",
+	}).then(response => {
 		if (response.status === 204 || response.status === 200) {
 			callback();
 		}
@@ -190,7 +187,7 @@ export const changeOrderStatus = (id, status, callback) => {
 	headers.append("Accept", "*/*");
 
 	fetch(
-		`http://${process.env.REACT_APP_HOST}/api/Orders/` +
+		`${process.env.REACT_APP_HOST}/api/Orders/` +
 			id +
 			`/changeState?state=` +
 			status,

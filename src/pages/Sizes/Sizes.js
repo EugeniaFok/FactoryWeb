@@ -16,7 +16,7 @@ import CreateItem from "../../components/CreateItem";
 function Sizes(props) {
 	const { sizes } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `http://${process.env.REACT_APP_HOST}/api/Sizes/`;
+	const url = `${process.env.REACT_APP_HOST}/api/Sizes/`;
 	const [isOpen, setIsOpen] = useState(false);
 	const [curValue, setValue] = useState(false);
 	const [curId, setId] = useState(false);

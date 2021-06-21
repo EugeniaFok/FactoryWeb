@@ -15,7 +15,7 @@ import CreateItem from "../../components/CreateItem";
 function Models() {
 	const { models } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `http://${process.env.REACT_APP_HOST}/api/Models/`;
+	const url = `${process.env.REACT_APP_HOST}/api/Models/`;
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenCreate, setIsOpenCreate] = useState(false);
 	const [curName, setName] = useState(false);
@@ -111,7 +111,7 @@ function Models() {
 function CreateNewModels(props) {
 	const { colors } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `http://${process.env.REACT_APP_HOST}/api/Colors/`;
+	const url = `${process.env.REACT_APP_HOST}/api/Colors/`;
 
 	useEffect(() => {
 		getList(url, list => dispatch(setColors(list)));
