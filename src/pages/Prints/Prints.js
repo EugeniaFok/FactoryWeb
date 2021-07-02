@@ -100,10 +100,11 @@ function Prints(props) {
 					<button onClick />
 				</div>
 				<div className="prints_list">
-					{prints.map(({ id, name, state }) => (
+					{prints.map(({ id, name, width, height, state }) => (
 						<OrderRowPrints
-							Id={id}
 							Name={name}
+							Width={width}
+							Height={height}
 							State={state}
 							select={() => {
 								alert(`You select print ${name}`);
@@ -201,8 +202,9 @@ function OrderRowPrints(props) {
 	return (
 		<div className="row_table">
 			<div className="print_item" onClick={props.select}>
-				<div>{props.Id}</div>
-				<div>{props.Name}</div>
+				<div>{`Изображение: ${props.Name}`}</div>
+				<div>{`Высота: ${props.Height}`}</div>
+				<div>{`Ширина: ${props.Width}`}</div>
 			</div>
 			<div className="controls">
 				<div className="btn delete" onClick={props.remove}>

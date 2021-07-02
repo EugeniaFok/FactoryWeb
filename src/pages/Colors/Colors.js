@@ -137,9 +137,8 @@ function OrderRowColors(props) {
 	return (
 		<div className="row_table">
 			<div className="color_item">
-				<div>{props.Id}</div>
-				<div>{props.Name}</div>
-				<div>{props.Value}</div>
+				<div>{`Цвет: ${props.Name}`}</div>
+				<div>{`Код: ${props.Value}`}</div>
 			</div>
 			<div className="controls">
 				<div className="btn delete" onClick={props.onClick}>

@@ -174,8 +174,8 @@ function RowTableUsers(props) {
 	return (
 		<div className="row_table">
 			<div className="user_item">
-				<div className="user_item__login">{props.Login}</div>
-				<div className="user_item__role">{props.Role}</div>
+				<div className="user_item__login">{`Пользователь: ${props.Login}`}</div>
+				<div className="user_item__role">{`Роль: ${props.Role}`}</div>
 			</div>
 			<div className="controls">
 				<div className="btn delete" onClick={props.onClick}>

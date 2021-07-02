@@ -2,7 +2,9 @@
     display: flex;
     align-items: center;
 }
-
+.model_item > * + * {
+    margin-left: 10px;
+}
 .models_list > * + * {
     margin-top: 10px;
 }

@@ -8,8 +8,8 @@ function OrderRow(props) {
 		<div className="row_table tablo_row">
 			<div>{`Клиент: ${clientName}`}</div>
 			<div>{`Статус: ${getStatus(state)}`}</div>
-			<div>{`Модель: ${model.name}`}</div>
-			<div>{`Размер: ${size.value}`}</div>
+			{model != null ? <div>{`Модель: ${model.name}`}</div> : null}
+			{size != null ? <div>{`Размер: ${size.value}`}</div> : null}
 		</div>
 	);
 }

@@ -8,7 +8,10 @@ import { getList } from "../../functions/functions";
 function Tablo() {
 	const { listOrders } = useSelector(state => state);
 	const dispatch = useDispatch();
-	const url = `${process.env.REACT_APP_HOST}/api/Orders`;
+	const { role } = useSelector(state => state);
+	const url =
+		`${process.env.REACT_APP_HOST}/api/Orders/` +
+		(role === "Board" ? "forBoard" : "");
 
 	useEffect(() => {
 		getList(url, list => dispatch(setListOrders(list)));
@@ -33,10 +36,12 @@ function Tablo() {
 					listOrders={listOrders.filter(
 						order => order.state !== 100 && order.state !== 200
 					)}
+					role={role}
 				/>
 				<TabloPanel
 					title="Заказы, готовые к выдаче"
 					listOrders={listOrders.filter(order => order.state === 100)}
+					role={role}
 				/>
 			</div>
 		</div>
@@ -49,9 +54,11 @@ function TabloPanel(props) {
 		<div className="column">
 			<div className="caption-tablo">{props.title}</div>
 			<div className="tablo-area">
-				{listOrders.map(order => (
-					<OrderRow {...order} />
-				))}
+				{props.role !== "Board"
+					? listOrders.map(order => <OrderRow {...order} />)
+					: listOrders.map(({ id, state, number }) => (
+							<OrderRow clientName={number} state={state} />
+					  ))}
 			</div>
 		</div>
 	);

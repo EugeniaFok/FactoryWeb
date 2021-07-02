@@ -82,6 +82,7 @@ function Models() {
 						<OrderRowModels
 							Id={id}
 							Name={name}
+							Color={color.name}
 							onClick={() => {
 								setIsOpen(true);
 								setName(name);
@@ -152,8 +153,8 @@ function OrderRowModels(props) {
 	return (
 		<div className="row_table">
 			<div className="model_item">
-				<div>{props.Name}</div>
-				<div>{props.Color}</div>
+				<div>{`Модель: ${props.Name}`}</div>
+				<div>{`Цвет: ${props.Color}`}</div>
 			</div>
 			<div className="controls">
 				<div className="btn delete" onClick={props.onClick}>

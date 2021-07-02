@@ -42,7 +42,6 @@ export const Maker = props => {
 											left: position.y,
 										})
 									);
-									alert(size.top);
 								}}
 								onResize={ref => {
 									dispatch(

@@ -149,8 +149,8 @@ function RowTableSizes(props) {
 	return (
 		<div className="row_table">
 			<div className="size_item">
-				<div>{props.Name}</div>
-				<div>{props.Value}</div>
+				<div>{`Наименование: ${props.Name}`}</div>
+				<div>{`Размер: ${props.Value}`}</div>
 			</div>
 			<div className="controls">
 				<div className="btn delete" onClick={props.onClick}>
