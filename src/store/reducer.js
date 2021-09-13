@@ -72,10 +72,12 @@ export const setPrintSize = size => ({
 	type: "SET_PRINT_SIZE",
 	size,
 });
-export const setPrintContent = (id, base64) => ({
+export const setPrintContent = (id, base64, width, height) => ({
 	type: "SET_PRINT_CONTENT",
 	id,
 	base64,
+	width,
+	height,
 });
 
 export const setOrder = order => ({
@@ -135,6 +137,8 @@ export const reducer = (state = initState, action) => {
 						...state.order.print,
 						id: action.id,
 						base64: action.base64,
+						width: action.width,
+						height: action.height,
 					},
 				},
 			};
@@ -145,8 +149,6 @@ export const reducer = (state = initState, action) => {
 					...state.order,
 					print: {
 						...state.order.print,
-						width: action.size.width,
-						height: action.size.height,
 						top: action.size.top,
 						left: action.size.left,
 					},

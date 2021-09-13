@@ -94,7 +94,12 @@ function Confirmation(props) {
 							onSetIssureOrder={() => {
 								setOrderStatus(element.id, "issue", () => {
 									dispatch(
-										deleteListItemId(listOrders, element.id)
+										setListOrders(
+											deleteListItemId(
+												listOrders,
+												element.id
+											)
+										)
 									);
 								});
 							}}
@@ -176,7 +181,7 @@ function OrderRowConfirm(props) {
 						Подтвердить
 					</div>
 				) : null}
-				{props.Role === "Issue" ? (
+				{props.Role === "Issuer" ? (
 					<div
 						className="btn delete"
 						onClick={props.onSetIssureOrder}

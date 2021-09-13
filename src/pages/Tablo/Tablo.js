@@ -34,13 +34,13 @@ function Tablo() {
 				<TabloPanel
 					title="Заказы в обработке"
 					listOrders={listOrders.filter(
-						order => order.state !== 100 && order.state !== 200
+						order => order.state !== 100 && order.state !== 200 && order.state !== 3
 					)}
 					role={role}
 				/>
 				<TabloPanel
 					title="Заказы, готовые к выдаче"
-					listOrders={listOrders.filter(order => order.state === 100)}
+					listOrders={listOrders.filter(order =>  order.state === 3)}
 					role={role}
 				/>
 			</div>

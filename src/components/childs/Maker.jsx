@@ -36,20 +36,8 @@ export const Maker = props => {
 								onDragStop={(e, position) => {
 									dispatch(
 										setPrintSize({
-											width,
-											height,
 											top: position.x,
 											left: position.y,
-										})
-									);
-								}}
-								onResize={ref => {
-									dispatch(
-										setPrintSize({
-											width: ref.style.width,
-											height: ref.style.height,
-											top,
-											left,
 										})
 									);
 								}}
@@ -57,7 +45,8 @@ export const Maker = props => {
 								<div
 									className="print"
 									style={{
-										maxWidth: 127,
+										maxWidth: 125,
+										maxHeight: 125,
 										width,
 										height,
 										backgroundImage: `url(data:image/png;base64,${base64})`,
@@ -68,7 +57,7 @@ export const Maker = props => {
 					) : null}
 				</div>
 				<div className="maker_wrapper__description">
-					{`Цвет: ${color?.name}, Модель: ${model?.name}, Размер: ${size?.value}`}
+					{`Цвет: ${color?.name}, Модель: ${model?.name}, Размер: ${size?.value}, Координаты: ${top}:${left}`}
 				</div>
 			</div>
 		</div>

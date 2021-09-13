@@ -43,7 +43,9 @@ function ChoosePrint(props) {
 											dispatch(
 												setPrintContent(
 													print.id,
-													print.contentsBase64
+													print.contentsBase64,
+													print.width,
+													print.height
 												)
 											);
 										}}
