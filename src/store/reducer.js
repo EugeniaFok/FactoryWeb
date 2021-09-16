@@ -11,9 +11,9 @@ const initState = {
 			width: 50,
 			height: 50,
 			base64: "",
-			top: 0,
-			left: 0,
 		},
+		top: 0,
+		left: 0,
 	},
 	listOrders: [],
 	listUsers: [],
@@ -147,11 +147,8 @@ export const reducer = (state = initState, action) => {
 				...state,
 				order: {
 					...state.order,
-					print: {
-						...state.order.print,
-						top: action.size.top,
-						left: action.size.left,
-					},
+					top: action.size.top,
+					left: action.size.left,
 				},
 			};
 		case "SET_ORDER":

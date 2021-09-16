@@ -8,9 +8,11 @@ export const Maker = props => {
 		color,
 		model,
 		size,
-		print: { width, height, base64, top, left },
+		print: { width, height, base64 },
+		top,
+		left,
 	} = useSelector(state => {
-		const { colorId, modelId, sizeId, print } = state.order;
+		const { colorId, modelId, sizeId, print, top, left } = state.order;
 		const { colors, models, sizes } = state;
 
 		return {
@@ -18,6 +20,8 @@ export const Maker = props => {
 			model: models.find(model => model.id === modelId),
 			size: sizes.find(size => size.id === sizeId),
 			print,
+			top,
+			left,
 		};
 	});
 	// const { width, height, base64 } = useSelector();
@@ -49,6 +53,8 @@ export const Maker = props => {
 										maxHeight: 125,
 										width,
 										height,
+										top,
+										left,
 										backgroundImage: `url(data:image/png;base64,${base64})`,
 									}}
 								></div>

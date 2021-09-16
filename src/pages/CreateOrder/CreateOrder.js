@@ -99,7 +99,9 @@ function CreationPanel() {
 		const {
 			modelId,
 			sizeId,
-			print: { id: printId, top, left },
+			print: { id: printId },
+			top,
+			left,
 		} = state.order;
 
 		return { modelId, sizeId, printId, top, left };

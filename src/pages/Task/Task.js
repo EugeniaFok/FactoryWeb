@@ -32,6 +32,8 @@ function GetTask(props) {
 										height: order.image.width,
 										base64: order.image.contentsBase64,
 									},
+									top: order.top,
+									left: order.left,
 								})
 							);
 							dispatch(
